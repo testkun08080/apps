@@ -19,7 +19,7 @@ export const app: AppConfig = {
   // 2026-09-11 に日本ストアで公開。ストアフロントを固定しない `/app/id...` 形式にして、
   // 英語版の公開後もそのまま閲覧者の国のストアへ飛ばせるようにしています。
   appStoreUrl: 'https://apps.apple.com/app/id6774141263',
-  version: '1.0.0',
+  version: '1.2.0',
   theme: {
     bg: '#FFF7EB',
     surface: '#FFFFFF',

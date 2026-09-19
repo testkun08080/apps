@@ -28,7 +28,7 @@ const faqs = [
   },
   {
     q: 'Are my photos and recordings sent to a server?',
-    a: 'No. Photos, recordings and memos are stored only on your device. Only when you run AI outline generation is text sent — the title, the memo text and the capture time. Photo files themselves are never sent.',
+    a: 'Original photo files and recordings are not. Photos, recordings and memos are stored on your device, and can sync via iCloud across devices on the same Apple ID when you enable it. Only when you run AI outline generation do we send text (title, memo, capture time and so on) plus a small list thumbnail of each photo to Google Gemini via Cloudflare.',
   },
   {
     q: 'Does it work offline?',
@@ -40,7 +40,7 @@ const faqs = [
   },
   {
     q: 'Are there ads?',
-    a: 'Only a rewarded video you choose to watch. Banners and interstitials never appear on their own. Once the free AI outline quota is gone, you can optionally watch one to earn a single run (AI: once a day, up to five a month; export: once a day). Ads are always non-personalised, and ATT permission is never requested.',
+    a: 'Only a rewarded video you choose to watch. Banners and interstitials never appear on their own. Once the free AI outline quota is gone, you can optionally watch one to earn a single run (AI: once a day, up to five a month; export: once a day). AI Plus subscribers never see the offer. After buying one-time export, the AI video may still appear once the free AI quota is gone. Ads are always non-personalised, and ATT permission is never requested.',
   },
   {
     q: 'Which devices and iOS versions are supported?',
@@ -162,10 +162,10 @@ const plans = [
     unit: 'one-time',
     quota: 'Markdown / HTML / ZIP export',
     points: [
-      '¥480 a month — export while subscribed',
-      '¥3,980 a year — the initial purchase keeps exporting available',
       'One payment, yours for good',
+      'Not a subscription',
       'AI outline generation stays on the free quota (10 in total)',
+      'After the free quota, you can still choose the AI video when you need it',
     ],
   },
   {
@@ -196,10 +196,10 @@ const comparison = [
 
 const privacyPoints = [
   'No account and no sign-in',
-  'Photos, recordings, memos and drafts are stored only on your device',
-  'Photo files themselves are never sent to a server',
-  'Only when you run AI outline generation is text sent — the title, the memo text, the capture time',
-  'Whether the place name is sent can be turned off per draft (coordinates are never sent)',
+  'Photos, recordings, memos and drafts are stored on your device, with optional iCloud sync',
+  'Original photo files are never sent to our servers',
+  'Only when you run AI outline generation are text and list thumbnails sent to Gemini (Groq on failure)',
+  'Whether the place name is sent can be turned off per draft (off by default; coordinates are never sent)',
   'Location permission is never requested',
   'The only ad is a rewarded video you choose to watch',
   'No tracking for advertising, and no ATT prompt',
@@ -421,13 +421,13 @@ const privacyPoints = [
         </div>
 
         <p class="sg-note sg-note--fine">
-          The monthly and yearly export plans and AI Plus are auto-renewing subscriptions. There is
-          no free trial. They renew automatically unless cancelled at least 24 hours before the end
-          of the period. Purchases, renewals, cancellations and restores all go through the App
-          Store; cancel under Settings &gt; Apple ID &gt; Subscriptions. The one-time and yearly
-          export plans keep exporting available after the initial purchase. The AI Plus monthly
-          allowance resets each calendar month. Prices shown are those of the Japanese App Store —
-          the amount shown in your own App Store is the one that applies.
+          The export plan is a one-time purchase (not a subscription). AI Plus is an auto-renewing
+          subscription. There is no free trial. It renews automatically unless cancelled at least 24
+          hours before the end of the period. Purchases, renewals, cancellations and restores all go
+          through the App Store; cancel under Settings &gt; Apple ID &gt; Subscriptions. The
+          one-time export plan keeps exporting available after a single purchase. The AI Plus
+          monthly allowance resets each calendar month. Prices shown are those of the Japanese App
+          Store — the amount shown in your own App Store is the one that applies.
         </p>
       </div>
     </section>
