@@ -8,7 +8,10 @@ import type { AppConfig } from '@/apps/types';
 export const app: AppConfig = {
   slug: 'watcher',
   name: 'Watcher',
-  tagline: 'あなたの「気になる」を、AI が見張って、まとめて届ける。',
+  tagline: {
+    ja: 'あなたの「気になる」を、AI が見張って、まとめて届ける。',
+    en: 'AI watches what you care about, and delivers the summary.',
+  },
   supportEmail: 'support@legal.testkun.net',
   theme: {
     bg: '#f8fafc',

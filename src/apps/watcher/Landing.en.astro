@@ -1,0 +1,499 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import LanguageSwitcher from '@/components/LanguageSwitcher.astro';
+import { site } from '@/config/site';
+import { getSupportEmail } from '@/apps';
+import { defaultLocale } from '@/config/i18n';
+import { localizePath, t } from '@/i18n';
+import type { AppPageProps } from '@/apps/types';
+import Icon from './components/Icon.astro';
+import './theme.css';
+
+/**
+ * アイコンは watcher リポジトリの `watcher-app/assets/images/app-icon-mark.png` を、
+ * iOS アイコン定義（`watcher-app/assets/watcher.icon/icon.json`）と同じ
+ * 淡いグラデーション背景・スケール 0.6 で合成したものです。
+ */
+import icon from '@/assets/watcher/icon.png';
+
+interface Props extends AppPageProps {}
+
+const { app, locale = defaultLocale } = Astro.props;
+const supportEmail = getSupportEmail(app);
+const year = new Date().getFullYear();
+
+const themes = [
+  'Breaking news about companies you follow',
+  'Updates from competing products',
+  'Technology trends in your industry',
+  'Papers and research in a field you care about',
+  'Announcements and events from your favorite creators',
+  'Local news from a place you are traveling to',
+];
+
+const steps = [
+  {
+    title: 'Write your theme',
+    body: 'Just answer "what are you curious about?" in your own words. No need for careful search keywords.',
+  },
+  {
+    title: 'AI organizes the angles',
+    body: 'AI reads what you registered and suggests what to watch for and what to look into. Drop what you don’t need and exclude topics you’d rather skip.',
+  },
+  {
+    title: 'Your summary arrives',
+    body: 'Set the frequency and depth, then leave the rest to Watcher. A report with the key points and sources arrives automatically.',
+  },
+];
+
+const features = [
+  {
+    icon: 'eye',
+    title: 'Register and manage watches',
+    body: 'Register topics you care about as watches. Edit or pause them anytime.',
+  },
+  {
+    icon: 'sparkle',
+    title: 'AI suggests angles',
+    body: 'From the theme you enter, AI organizes and suggests what to watch and what to look into.',
+  },
+  {
+    icon: 'schedule',
+    title: 'Scheduled runs',
+    body: 'Daily / weekly / monthly / one-off. Watcher researches on the schedule that fits how you want to receive updates.',
+  },
+  {
+    icon: 'bolt',
+    title: 'Research on demand',
+    body: 'Run a search right away instead of waiting for the next scheduled run.',
+  },
+  {
+    icon: 'report',
+    title: 'Reports with sources',
+    body: 'Findings are summarized with links to the sources behind them.',
+  },
+  {
+    icon: 'bell',
+    title: 'Push notifications',
+    body: 'Get notified as soon as a new report arrives.',
+  },
+  {
+    icon: 'inbox',
+    title: 'Inbox',
+    body: 'Browse everything you’ve received in one list. Sort what you’ve read from what you’ve bookmarked.',
+  },
+  {
+    icon: 'search',
+    title: 'Search, sort, and filter',
+    body: 'Search by keyword, plus filter by date range, watch, or source.',
+  },
+  {
+    icon: 'tag',
+    title: 'Categories',
+    body: 'Organize your watches into categories you define (Standard / Pro).',
+  },
+  {
+    icon: 'sync',
+    title: 'On-device storage and cloud sync',
+    body: 'Once a report arrives it’s saved on your device, so you can read it again offline.',
+  },
+  {
+    icon: 'export',
+    title: 'Export reports',
+    body: 'Keep a copy as Markdown or PDF (Pro).',
+  },
+  {
+    icon: 'mail',
+    title: 'Email delivery',
+    body: 'Also receive your summaries by email (Pro).',
+  },
+  {
+    icon: 'theme',
+    title: 'Light / dark theme',
+    body: 'Match your system setting, or switch manually.',
+  },
+  {
+    icon: 'globe',
+    title: 'Japanese / English',
+    body: 'The app’s display language supports both Japanese and English.',
+  },
+] as const;
+
+const levels = [
+  {
+    level: 1,
+    name: 'Key points only',
+    body: 'Short enough to read on a busy day, when you just want to know what happened.',
+    plans: 'All plans',
+  },
+  {
+    level: 2,
+    name: 'A bit more detail',
+    body: 'Adds background and related developments, with enough material to help you decide.',
+    plans: 'Standard / Pro',
+  },
+  {
+    level: 3,
+    name: 'The deepest detail',
+    body: 'A deep dive into the topics that matter most, kept as a detailed report worth reading.',
+    plans: 'Pro',
+  },
+];
+
+const plans = [
+  {
+    name: 'Trial',
+    featured: false,
+    price: '¥0',
+    unit: 'No credit card required',
+    quota: 'Up to 5 total "research on demand" runs',
+    points: ['Try it out right away', 'Research at the "key points only" level', 'Report history: the last 7 reports per watch'],
+  },
+  {
+    name: 'Standard',
+    featured: true,
+    price: '¥980',
+    unit: '/ month',
+    quota: '60 reports generated per month',
+    points: [
+      'Scheduled watching (unlimited watches)',
+      'Detail levels: "key points only" and "a bit more detail"',
+      'Unlimited report history and category organization',
+    ],
+  },
+  {
+    name: 'Pro',
+    featured: false,
+    price: '¥1,500',
+    unit: '/ month',
+    quota: '120 reports generated per month',
+    points: [
+      'Everything in Standard',
+      'Access to the "deepest detail" level',
+      'Markdown / PDF export and email delivery',
+    ],
+  },
+];
+
+const comparison = [
+  { label: 'Scheduled watching', sample: '—', standard: '○', pro: '○' },
+  { label: 'Number of watches', sample: 'Save only', standard: 'Unlimited', pro: 'Unlimited' },
+  { label: 'Reports generated', sample: '5 total', standard: '60 / month', pro: '120 / month' },
+  { label: 'Report detail', sample: 'Key points only', standard: 'Up to a bit more detail', pro: 'Up to the deepest detail' },
+  { label: 'Research on demand', sample: '1 / day', standard: '3 / day', pro: '5 / day' },
+  { label: 'Report history', sample: 'Last 7', standard: 'Unlimited', pro: 'Unlimited' },
+  { label: 'Categories', sample: '—', standard: '○', pro: '○' },
+  { label: 'Markdown / PDF export', sample: '—', standard: '—', pro: '○' },
+  { label: 'Email delivery', sample: '—', standard: '—', pro: '○' },
+  { label: 'Ads', sample: 'None', standard: 'None', pro: 'None' },
+];
+
+const privacyPoints = [
+  'Sign in with your Apple or Google account',
+  'Reports are saved on your device, so you can read them again offline',
+  'Your registered themes and reports are saved to our servers for sync',
+  'No advertising trackers. Ads are never shown on any plan',
+  'You can request deletion of account-related data through support',
+];
+
+const description =
+  'Watcher is an app that lets you register topics you care about; AI researches them on a schedule and delivers a report with key points and sources. Supports daily / weekly / monthly scheduled runs and push notifications.';
+---
+
+<BaseLayout
+  title={app.name}
+  app={app}
+  locale={locale}
+  description={description}
+  ogImage={icon.src}
+>
+  <a class="wt-skip" href="#wt-main">Skip to content</a>
+
+  <header class="wt-nav">
+    <div class="wt-nav__inner">
+      <p class="wt-nav__brand">
+        <Image src={icon} alt="" width={32} height={32} loading="eager" />
+        <span>{app.name}</span>
+      </p>
+      <nav class="wt-nav__links" aria-label="On this page">
+        <a href="#wt-features">Features</a>
+        <a href="#wt-plans">Plans</a>
+        <a href={localizePath(`${app.slug}/support/`, locale)}>{t(locale, 'nav.support')}</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="wt-main">
+    <section class="wt-band wt-hero">
+      <div class="wt-band__inner wt-hero__inner">
+        <div class="wt-hero__copy">
+          <p class="wt-hero__badges">
+            <span class="wt-badge wt-badge--dot">Coming soon to the App Store</span>
+          </p>
+          <h1 class="wt-h1">AI watches<br />what you care about,<br />and delivers the summary.</h1>
+          <p class="wt-lead">
+            Watcher lets you register topics you care about, and AI researches them on a schedule, turning them into reports with key points and sources. It replaces the time you spend searching around with time spent reading what arrives.
+          </p>
+          <div class="wt-cta">
+            <a class="wt-btn wt-btn--primary" href="#wt-plans">
+              See plans
+              <Icon name="chevron" />
+            </a>
+            <a
+              class="wt-btn wt-btn--ghost"
+              href={localizePath(`${app.slug}/support/`, locale)}
+            >
+              {t(locale, 'nav.support')}
+              <Icon name="chevron" />
+            </a>
+          </div>
+          <p class="wt-hero__meta">Works on iPhone / iPad · Available in Japanese / English</p>
+        </div>
+
+        <div class="wt-hero__art">
+          <span class="wt-hero__glow" aria-hidden="true"></span>
+          <div class="wt-hero__tile">
+            <Image
+              src={icon}
+              alt="Watcher app icon"
+              widths={[240, 480, 720]}
+              sizes="(max-width: 900px) 52vw, 240px"
+              loading="eager"
+              fetchpriority="high"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wt-band wt-band--surface" aria-labelledby="wt-themes-title">
+      <div class="wt-band__inner">
+        <div class="wt-head">
+          <h2 id="wt-themes-title" class="wt-h2">Themes worth having watched, all the time.</h2>
+          <p class="wt-sub">News, products, competitors, technology trends. The topics you want to follow but can’t check every day are exactly what Watcher is for.</p>
+        </div>
+
+        <ul class="wt-chips">
+          {
+            themes.map((theme) => (
+              <li>
+                <Icon name="eye" />
+                {theme}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="wt-band wt-band--alt" aria-labelledby="wt-steps-title">
+      <div class="wt-band__inner">
+        <div class="wt-head">
+          <p class="wt-eyebrow">How it works</p>
+          <h2 id="wt-steps-title" class="wt-h2">You only set it up once.</h2>
+        </div>
+
+        <ol class="wt-steps">
+          {
+            steps.map((step) => (
+              <li class="wt-step">
+                <span class="wt-step__num" aria-hidden="true" />
+                <h3>{step.title}</h3>
+                <p>{step.body}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <section class="wt-band wt-band--surface" id="wt-features" aria-labelledby="wt-features-title">
+      <div class="wt-band__inner">
+        <div class="wt-head">
+          <p class="wt-eyebrow">Features</p>
+          <h2 id="wt-features-title" class="wt-h2">Gather, summarize, and revisit — all in one app.</h2>
+        </div>
+
+        <ul class="wt-features">
+          {
+            features.map((feature) => (
+              <li class="wt-feature">
+                <span class="wt-feature__icon">
+                  <Icon name={feature.icon} />
+                </span>
+                <div class="wt-feature__text">
+                  <h3>{feature.title}</h3>
+                  <p>{feature.body}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="wt-band wt-band--alt" aria-labelledby="wt-levels-title">
+      <div class="wt-band__inner">
+        <div class="wt-head">
+          <p class="wt-eyebrow">Report detail</p>
+          <h2 id="wt-levels-title" class="wt-h2">Choose how deep to go, per theme.</h2>
+          <p class="wt-sub">Keep the topics you just want a glance at short, and go deep on the ones you follow closely. It’s configurable per watch.</p>
+        </div>
+
+        <ul class="wt-levels">
+          {
+            levels.map((level) => (
+              <li class="wt-level">
+                <span class="wt-level__bars" aria-hidden="true">
+                  <span data-on={level.level >= 1} />
+                  <span data-on={level.level >= 2} />
+                  <span data-on={level.level >= 3} />
+                </span>
+                <h3>{level.name}</h3>
+                <p>{level.body}</p>
+                <p class="wt-level__plan">{level.plans}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="wt-band wt-band--surface" id="wt-plans" aria-labelledby="wt-plans-title">
+      <div class="wt-band__inner">
+        <div class="wt-head">
+          <p class="wt-eyebrow">Plans</p>
+          <h2 id="wt-plans-title" class="wt-h2">Try it first, then keep going if you like it.</h2>
+          <p class="wt-sub">There’s no limit on how many watches you can register. What changes by plan is how many reports you can generate per month, and how detailed they are.</p>
+        </div>
+
+        <ul class="wt-plans">
+          {
+            plans.map((plan) => (
+              <li class="wt-plan" data-featured={plan.featured}>
+                <div class="wt-plan__head">
+                  <h3>{plan.name}</h3>
+                  {plan.featured && <span class="wt-badge">Recommended</span>}
+                </div>
+                <p class="wt-plan__price">
+                  <strong>{plan.price}</strong>
+                  <span>{plan.unit}</span>
+                </p>
+                <p class="wt-plan__quota">{plan.quota}</p>
+                <ul class="wt-plan__list">
+                  {plan.points.map((point) => (
+                    <li>
+                      <Icon name="check" />
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="wt-callout">
+          <h3>10-day free trial</h3>
+          <p>Scheduled watching is available on Standard or Pro. Pick either one to start a 10-day free trial (a payment method is required). You’ll be notified before it ends, and canceling before then means you won’t be charged. During the trial you can generate a set number of reports based on the trial length (20 for Standard / 40 for Pro).</p>
+        </div>
+
+        <div class="wt-table-wrap">
+          <table class="wt-table">
+            <caption>What each plan can do</caption>
+            <thead>
+              <tr>
+                <th scope="col">Feature</th>
+                <th scope="col">Trial</th>
+                <th scope="col">Standard</th>
+                <th scope="col">Pro</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                comparison.map((row) => (
+                  <tr>
+                    <th scope="row">{row.label}</th>
+                    <td>
+                      <span class="wt-mark" data-on={row.sample === '○'}>
+                        {row.sample}
+                      </span>
+                      {row.sample === '—' && <span class="wt-sr">Not available</span>}
+                    </td>
+                    <td>
+                      <span class="wt-mark" data-on={row.standard === '○'}>
+                        {row.standard}
+                      </span>
+                      {row.standard === '—' && <span class="wt-sr">Not available</span>}
+                    </td>
+                    <td>
+                      <span class="wt-mark" data-on={row.pro === '○'}>
+                        {row.pro}
+                      </span>
+                      {row.pro === '—' && <span class="wt-sr">Not available</span>}
+                    </td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <p class="wt-note wt-note--fine">Standard / Pro are auto-renewing subscriptions. Annual plans are also available. Purchases, renewals, cancellations, and restores are handled through your App Store subscription, and the price shown in the App Store is authoritative. The report quota resets every calendar month.</p>
+      </div>
+    </section>
+
+    <section class="wt-band wt-band--alt wt-privacy" aria-labelledby="wt-privacy-title">
+      <div class="wt-band__inner">
+        <div class="wt-privacy__head">
+          <span class="wt-privacy__icon">
+            <Icon name="lock" />
+          </span>
+          <h2 id="wt-privacy-title" class="wt-h2">We only handle the data we need.</h2>
+        </div>
+
+        <ul class="wt-checks">
+          {
+            privacyPoints.map((point) => (
+              <li>
+                <Icon name="check" />
+                <span>{point}</span>
+              </li>
+            ))
+          }
+        </ul>
+
+        <p class="wt-note">
+          See the <a href={localizePath(`${app.slug}/privacy/`, locale)}>{t(locale, 'nav.privacy')}</a> for details.
+        </p>
+      </div>
+    </section>
+
+    <section class="wt-band wt-closing">
+      <div class="wt-band__inner">
+        <h2 class="wt-h2">Let Watcher keep an eye on it.</h2>
+        <p class="wt-sub">Following along is the app’s job. All you do is read what arrives.</p>
+        <div class="wt-cta wt-cta--center">
+          <span class="wt-badge wt-badge--dot">Coming soon to the App Store</span>
+        </div>
+        <p class="wt-note wt-note--fine">Reports are generated by AI. For decisions that matter, please also check the cited sources.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wt-footer">
+    <div class="wt-footer__inner">
+      <p class="wt-footer__brand">{app.name}</p>
+      <nav class="wt-footer__links" aria-label="Footer">
+        <a href={localizePath('', locale)}>Home</a>
+        <a href={localizePath(`${app.slug}/support/`, locale)}>{t(locale, 'nav.support')}</a>
+        <a href={localizePath(`${app.slug}/privacy/`, locale)}>{t(locale, 'nav.privacy')}</a>
+        <a href={localizePath(`${app.slug}/terms/`, locale)}>{t(locale, 'nav.terms')}</a>
+        <a href={`mailto:${supportEmail}`}>{supportEmail}</a>
+      </nav>
+      <LanguageSwitcher locale={locale} />
+      <p class="wt-footer__meta">&copy; {year} {site.operatorName}</p>
+    </div>
+  </footer>
+</BaseLayout>
