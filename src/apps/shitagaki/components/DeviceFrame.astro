@@ -1,0 +1,33 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  caption?: string;
+  /** ヒーロー用の 1 枚だけ eager に読ませます */
+  eager?: boolean;
+  widths?: number[];
+  sizes?: string;
+}
+
+const { src, alt, caption, eager = false, widths, sizes } = Astro.props;
+---
+
+<figure class="sg-shot">
+  <div class="sg-device">
+    <div class="sg-device__screen">
+      <Image
+        src={src}
+        alt={alt}
+        widths={widths ?? [300, 460, 620]}
+        sizes={sizes ?? '(max-width: 640px) 68vw, 300px'}
+        loading={eager ? 'eager' : 'lazy'}
+        fetchpriority={eager ? 'high' : 'auto'}
+      />
+    </div>
+    <span class="sg-device__island" aria-hidden="true"></span>
+  </div>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>

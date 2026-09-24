@@ -17,6 +17,16 @@ import './theme.css';
  */
 import icon from '@/assets/watcher/icon.png';
 
+/**
+ * App Store submission screenshots (headline text and device frame are baked into the image).
+ * Exported from the watcher repo's `design/app-store-screenshots/iphone/en/`.
+ */
+import shot01 from '@/assets/watcher/en/01-home.png';
+import shot02 from '@/assets/watcher/en/02-reports.png';
+import shot03 from '@/assets/watcher/en/03-watchlist.png';
+import shot04 from '@/assets/watcher/en/04-settings.png';
+import shot05 from '@/assets/watcher/en/05-email.png';
+
 interface Props extends AppPageProps {}
 
 const { app, locale = defaultLocale } = Astro.props;
@@ -189,6 +199,14 @@ const comparison = [
   { label: 'Ads', sample: 'None', standard: 'None', pro: 'None' },
 ];
 
+const screenshots = [
+  { src: shot01, alt: 'Home screen showing your registered watches, each with its latest report at a glance' },
+  { src: shot02, alt: 'Report screen showing a research result with key points and sources' },
+  { src: shot03, alt: 'Watchlist screen for managing every topic you want to follow in one place' },
+  { src: shot04, alt: 'Settings screen for adjusting notifications and report detail level' },
+  { src: shot05, alt: 'Email delivery screen showing reports sent to your inbox' },
+];
+
 const privacyPoints = [
   'Sign in with your Apple or Google account',
   'Reports are saved on your device, so you can read them again offline',
@@ -263,6 +281,33 @@ const description =
               fetchpriority="high"
             />
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wt-band wt-band--alt" aria-labelledby="wt-gallery-title">
+      <div class="wt-band__inner">
+        <div class="wt-head">
+          <p class="wt-eyebrow">Inside the app</p>
+          <h2 id="wt-gallery-title" class="wt-h2">From watching to a report in your inbox.</h2>
+        </div>
+
+        <div class="wt-gallery">
+          <ul class="wt-gallery__track">
+            {
+              screenshots.map((shot) => (
+                <li class="wt-gallery__item">
+                  <Image
+                    src={shot.src}
+                    alt={shot.alt}
+                    widths={[280, 420, 560]}
+                    sizes="(max-width: 900px) 62vw, 220px"
+                    loading="lazy"
+                  />
+                </li>
+              ))
+            }
+          </ul>
         </div>
       </div>
     </section>

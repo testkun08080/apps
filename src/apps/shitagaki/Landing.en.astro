@@ -11,6 +11,18 @@ import './theme.css';
 
 /** 日本語版（`Landing.astro`）の対訳。構成・クラス名は同じに保っています。 */
 import icon from '@/assets/shitagaki/icon.png';
+import DeviceFrame from './components/DeviceFrame.astro';
+
+/**
+ * App Store submission screenshots (exported from the photo-diary repo's
+ * `design/ios-submission/en/`).
+ */
+import shotHome from '@/assets/shitagaki/en/home.png';
+import shotEdit1 from '@/assets/shitagaki/en/edit1.png';
+import shotEdit2 from '@/assets/shitagaki/en/edit2.png';
+import shotKousei from '@/assets/shitagaki/en/kousei.png';
+import shotPreview from '@/assets/shitagaki/en/preview.png';
+import shotReorder from '@/assets/shitagaki/en/reorder.png';
 
 interface Props extends AppPageProps {}
 
@@ -47,6 +59,15 @@ const faqs = [
     a: 'iPhone and iPad running iOS 26 or later. Transcription runs on the device using the speech recognition introduced in iOS 26.',
   },
 ] as const;
+
+const gallery = [
+  { src: shotHome, alt: 'Draft list screen showing drafts grouped by capture date and photo count', caption: 'Draft list', body: 'Organized by the date you shot each photo.' },
+  { src: shotEdit1, alt: 'Per-photo memo screen with mic, add-photo and next buttons', caption: 'A memo per photo', body: 'Speak it, or type it on the keyboard.' },
+  { src: shotEdit2, alt: 'Recording screen showing photos switching while what you say is sorted automatically', caption: 'Swipe while recording', body: 'Keep talking as you swipe — it sorts itself by photo.' },
+  { src: shotKousei, alt: 'Outline instruction screen with tone and order hint chips', caption: 'AI proposes an outline', body: 'Instructions are optional — it still builds one.' },
+  { src: shotReorder, alt: 'Screen for dragging outline cards into a new order', caption: 'Reorder and confirm', body: 'The proposed outline can be rearranged card by card.' },
+  { src: shotPreview, alt: 'Article preview screen with a toggle between article and Markdown view', caption: 'Article / Markdown preview', body: 'Compare the finished look before you export.' },
+];
 
 const faqJsonLd = JSON.stringify({
   '@context': 'https://schema.org',
@@ -102,6 +123,16 @@ const features = [
     icon: 'cards',
     title: 'Edit the outline cards',
     body: 'The proposed outline can be reordered and edited card by card, as many times as it takes.',
+  },
+  {
+    icon: 'images',
+    title: 'Mix text and photos, in any order',
+    body: 'Insert text-only blocks between photos. Drag from the filmstrip to reorder everything.',
+  },
+  {
+    icon: 'undo',
+    title: 'Undo, per photo',
+    body: 'After AI generates the outline, undo or redo one photo’s text at a time.',
   },
   {
     icon: 'markdown',
@@ -292,7 +323,30 @@ const privacyPoints = [
       </div>
     </section>
 
-    <section class="sg-band sg-band--surface" id="sg-steps" aria-labelledby="sg-steps-title">
+    <section class="sg-band sg-band--surface" aria-labelledby="sg-gallery-title">
+      <div class="sg-band__inner">
+        <div class="sg-head">
+          <p class="sg-eyebrow">Inside the app</p>
+          <h2 id="sg-gallery-title" class="sg-h2">From looking to an article, screen by screen.</h2>
+        </div>
+
+        <div class="sg-gallery">
+          <ul class="sg-gallery__track">
+            {
+              gallery.map((shot) => (
+                <li class="sg-gallery__item">
+                  <DeviceFrame src={shot.src} alt={shot.alt} />
+                  <h3>{shot.caption}</h3>
+                  <p>{shot.body}</p>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="sg-band sg-band--alt" id="sg-steps" aria-labelledby="sg-steps-title">
       <div class="sg-band__inner">
         <div class="sg-head">
           <p class="sg-eyebrow">How it works</p>
@@ -317,7 +371,7 @@ const privacyPoints = [
       </div>
     </section>
 
-    <section class="sg-band sg-band--alt" id="sg-features" aria-labelledby="sg-features-title">
+    <section class="sg-band sg-band--surface" id="sg-features" aria-labelledby="sg-features-title">
       <div class="sg-band__inner">
         <div class="sg-head">
           <p class="sg-eyebrow">Features</p>
@@ -342,7 +396,7 @@ const privacyPoints = [
       </div>
     </section>
 
-    <section class="sg-band sg-band--surface" id="sg-plans" aria-labelledby="sg-plans-title">
+    <section class="sg-band sg-band--alt" id="sg-plans" aria-labelledby="sg-plans-title">
       <div class="sg-band__inner">
         <div class="sg-head">
           <p class="sg-eyebrow">Plans</p>
@@ -432,7 +486,7 @@ const privacyPoints = [
       </div>
     </section>
 
-    <section class="sg-band sg-band--alt" id="sg-faq" aria-labelledby="sg-faq-title">
+    <section class="sg-band sg-band--surface" id="sg-faq" aria-labelledby="sg-faq-title">
       <div class="sg-band__inner">
         <div class="sg-head">
           <p class="sg-eyebrow">FAQ</p>
@@ -452,7 +506,7 @@ const privacyPoints = [
       </div>
     </section>
 
-    <section class="sg-band sg-band--surface sg-privacy" aria-labelledby="sg-privacy-title">
+    <section class="sg-band sg-band--alt sg-privacy" aria-labelledby="sg-privacy-title">
       <div class="sg-band__inner">
         <div class="sg-privacy__head">
           <span class="sg-privacy__icon">
