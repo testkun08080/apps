@@ -1,4 +1,5 @@
 import type { AppConfig } from '@/apps/types';
+import icon from '@/assets/life-office/icon.png';
 
 /**
  * トークンは shukkin-kidou の `src/constants/themes/{light,dark}.ts` と揃えています。
@@ -11,6 +12,7 @@ export const app: AppConfig = {
     en: 'Your morning clock-in ritual, on your phone.',
   },
   supportEmail: 'support@legal.testkun.net',
+  icon,
   appStoreUrl: 'https://apps.apple.com/jp/app/id6773638323',
   version: '1.5.1',
   theme: {

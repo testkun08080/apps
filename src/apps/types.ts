@@ -1,3 +1,4 @@
+import type { ImageMetadata } from 'astro';
 import type { Locale } from '@/config/i18n';
 import type { LocalizedString } from '@/i18n';
 
@@ -21,6 +22,8 @@ export type AppConfig = {
   tagline: LocalizedString;
   /** 未指定時は site.defaultSupportEmail を使用 */
   supportEmail?: string;
+  /** アプリアイコン（未指定時はハブのカードにイニシャルを表示） */
+  icon?: ImageMetadata;
   theme: AppTheme;
   /** 指定すると prefers-color-scheme: dark でこのトークンに切り替わります */
   darkTheme?: AppTheme;
