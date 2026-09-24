@@ -14,6 +14,42 @@ export type Release = {
  */
 export const releases: Release[] = [
   {
+    version: '1.5.0',
+    date: '2026-09-19',
+    highlights: {
+      ja: [
+        'ホーム画面の天井ライトを、紐を引いて揺らして遊べるようになりました',
+        '打刻レシートや記録の詳細から、その日の打刻テキストを共有できるようになりました',
+        'レシートの共有で、画像と打刻テキストを同じ共有シートに載せられるようになりました',
+        '退勤レシートの行順を、出勤→退勤の時系列に揃えました（夜勤は退勤に +1 日を表示）',
+        'レシートを写真に保存できないことがある不具合を修正しました',
+      ],
+      en: [
+        'Play with the ceiling lamp on Home — pull the cord and watch it swing',
+        'Share today’s punch text from the receipt or a day’s record detail',
+        'Receipt share now includes both the image and punch text in one share sheet',
+        'Clock-out receipts list clock-in before clock-out (overnight shifts show +1 on clock-out)',
+        'Fixed cases where saving a receipt photo to the library could fail',
+      ],
+    },
+  },
+  {
+    version: '1.4.4',
+    date: '2026-09-18',
+    highlights: {
+      ja: [
+        'CSV から複数月分をまとめて取り込めるようにしました',
+        'Pro で iCloud にバックアップし、機種変更時に復元できるようにしました',
+        'Pro 購入者のウィジェットが同期しない不具合を修正しました',
+      ],
+      en: [
+        'Import several months of CSV files at once',
+        'Pro: back up to iCloud and restore on a new device',
+        'Fixed the widget not syncing for Pro purchasers',
+      ],
+    },
+  },
+  {
     version: '1.4.2',
     date: '2026-09-13',
     highlights: {

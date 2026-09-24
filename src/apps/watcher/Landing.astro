@@ -17,6 +17,16 @@ import './theme.css';
  */
 import icon from '@/assets/watcher/icon.png';
 
+/**
+ * App Store 提出用のスクリーンショット（見出し・端末フレームは画像に合成済み）。
+ * watcher リポジトリの `design/app-store-screenshots/iphone/ja/` から書き出したものです。
+ */
+import shot01 from '@/assets/watcher/01-home.png';
+import shot02 from '@/assets/watcher/02-reports.png';
+import shot03 from '@/assets/watcher/03-watchlist.png';
+import shot04 from '@/assets/watcher/04-settings.png';
+import shot05 from '@/assets/watcher/05-email.png';
+
 interface Props extends AppPageProps {}
 
 const { app, locale = defaultLocale } = Astro.props;
@@ -189,6 +199,14 @@ const comparison = [
   { label: '広告', sample: 'なし', standard: 'なし', pro: 'なし' },
 ];
 
+const screenshots = [
+  { src: shot01, alt: 'ホーム画面。登録したウォッチが並び、それぞれの最新レポートが一目でわかる' },
+  { src: shot02, alt: 'レポート画面。要点と出典つきの調査結果が届いている' },
+  { src: shot03, alt: 'ウォッチリスト画面。追いかけたいテーマをまとめて管理できる' },
+  { src: shot04, alt: '設定画面。通知やレポートの詳しさなどを調整できる' },
+  { src: shot05, alt: 'メール配信画面。レポートをメールでも受け取れる' },
+];
+
 const privacyPoints = [
   'サインインは Apple または Google アカウントで行えます',
   '届いたレポートは端末内に保存され、オフラインでも読み返せます',
@@ -263,6 +281,33 @@ const description =
               fetchpriority="high"
             />
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wt-band wt-band--alt" aria-labelledby="wt-gallery-title">
+      <div class="wt-band__inner">
+        <div class="wt-head">
+          <p class="wt-eyebrow">アプリの画面</p>
+          <h2 id="wt-gallery-title" class="wt-h2">見張って、まとめて、届くまでを画面で。</h2>
+        </div>
+
+        <div class="wt-gallery">
+          <ul class="wt-gallery__track">
+            {
+              screenshots.map((shot) => (
+                <li class="wt-gallery__item">
+                  <Image
+                    src={shot.src}
+                    alt={shot.alt}
+                    widths={[280, 420, 560]}
+                    sizes="(max-width: 900px) 62vw, 220px"
+                    loading="lazy"
+                  />
+                </li>
+              ))
+            }
+          </ul>
         </div>
       </div>
     </section>

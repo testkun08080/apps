@@ -409,6 +409,113 @@
   height: auto;
 }
 
+/* ---------- 端末フレーム ---------- */
+
+.sg-device {
+  position: relative;
+  width: 100%;
+  padding: 0.55rem;
+  border-radius: 2.5rem;
+  background: linear-gradient(160deg, #4a4d47, #1c1e1a 42%, #35383300 100%), #1c1e1a;
+  box-shadow: var(--sg-shadow-lg);
+}
+
+.sg-device__screen {
+  overflow: hidden;
+  border-radius: 2rem;
+  background: var(--color-bg);
+  aspect-ratio: 1206 / 2622;
+}
+
+.sg-device__screen img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.sg-device__island {
+  position: absolute;
+  top: 1.15rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30%;
+  height: 1.2rem;
+  border-radius: 999px;
+  background: #1c1e1a;
+}
+
+/* ---------- ギャラリー ---------- */
+
+.sg-gallery {
+  margin-inline: calc(var(--sg-gutter) * -1);
+}
+
+.sg-gallery__track {
+  display: flex;
+  gap: clamp(1rem, 3vw, 1.75rem);
+  margin: 0;
+  padding: 0.5rem var(--sg-gutter) 1.5rem;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+.sg-gallery__item {
+  flex: 0 0 auto;
+  width: min(220px, 58vw);
+  scroll-snap-align: center;
+  text-align: center;
+}
+
+.sg-gallery__item h3 {
+  margin: 1rem 0 0.375rem;
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.sg-gallery__item p {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  color: var(--color-muted);
+}
+
+@media (min-width: 900px) {
+  .sg-gallery {
+    margin-inline: 0;
+  }
+
+  .sg-gallery__track {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow: visible;
+    padding-inline: 0;
+  }
+
+  .sg-gallery__item {
+    width: auto;
+  }
+
+  .sg-gallery__track .sg-device {
+    border-radius: 1.6rem;
+    padding: 0.35rem;
+  }
+
+  .sg-gallery__track .sg-device__screen {
+    border-radius: 1.3rem;
+  }
+
+  .sg-gallery__track .sg-device__island {
+    top: 0.75rem;
+    height: 0.7rem;
+  }
+}
+
 /* ---------- 使い方（ステップ） ---------- */
 
 .sg-steps {

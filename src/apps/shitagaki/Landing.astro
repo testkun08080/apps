@@ -17,6 +17,18 @@ import './theme.css';
  * 1024×1024 に合成しています。`assets/icon.png` は Expo の既定アイコンのままなので使いません。
  */
 import icon from '@/assets/shitagaki/icon.png';
+import DeviceFrame from './components/DeviceFrame.astro';
+
+/**
+ * App Store 提出用のスクリーンショット（photo-diary リポジトリの
+ * `design/ios-submission/ja/` から書き出したもの）。
+ */
+import shotHome from '@/assets/shitagaki/home.png';
+import shotEdit1 from '@/assets/shitagaki/edit1.png';
+import shotEdit2 from '@/assets/shitagaki/edit2.png';
+import shotKousei from '@/assets/shitagaki/kousei.png';
+import shotPreview from '@/assets/shitagaki/preview.png';
+import shotReorder from '@/assets/shitagaki/reorder.png';
 
 interface Props extends AppPageProps {}
 
@@ -53,6 +65,15 @@ const faqs = [
     a: 'iPhone / iPad に対応し、iOS 26 以降が必要です。端末内で文字起こしを行うため、iOS 26 の音声認識を利用しています。',
   },
 ] as const;
+
+const gallery = [
+  { src: shotHome, alt: '下書き一覧画面。撮影日と枚数つきで下書きが並ぶ', caption: '下書き一覧', body: '撮った日付・枚数ごとに整理されます。' },
+  { src: shotEdit1, alt: '写真ごとのメモ編集画面。マイク・写真追加・次へのボタンが並ぶ', caption: '写真ごとにメモ', body: '話すか、キーボードで書くか選べます。' },
+  { src: shotEdit2, alt: '録音中の画面。写真を切り替えながら話した内容が自動で振り分けられる', caption: '録りながらスワイプ', body: '止めずに話し続けるだけで、写真ごとに整理されます。' },
+  { src: shotKousei, alt: '構成の指示を話すか入力する画面。トーンや順番のヒントチップが並ぶ', caption: 'AI が構成を提案', body: '指示は任意。省略しても構成を組み立てます。' },
+  { src: shotReorder, alt: '構成カードをドラッグで並べ替える確認画面', caption: '並べ替えて確認', body: '提案された構成はカード単位で組み直せます。' },
+  { src: shotPreview, alt: '記事プレビュー画面。記事表示と Markdown 表示を切り替えられる', caption: '記事 / Markdown プレビュー', body: '仕上がりを見比べながら書き出せます。' },
+];
 
 const faqJsonLd = JSON.stringify({
   '@context': 'https://schema.org',
@@ -108,6 +129,16 @@ const features = [
     icon: 'cards',
     title: '構成カードの編集',
     body: '提案された構成はカード単位で並べ替え・編集できます。納得いくまで組み直せます。',
+  },
+  {
+    icon: 'images',
+    title: '写真とテキストを自由に並べる',
+    body: '写真の間にテキストだけのブロックも挿入できます。並び順はフィルムストリップからドラッグで変更できます。',
+  },
+  {
+    icon: 'undo',
+    title: '写真ごとにやり直せる',
+    body: 'AI が構成を生成したあとも、写真ごとにテキストを個別に元に戻したりやり直したりできます。',
   },
   {
     icon: 'markdown',
@@ -297,7 +328,30 @@ const privacyPoints = [
       </div>
     </section>
 
-    <section class="sg-band sg-band--surface" id="sg-steps" aria-labelledby="sg-steps-title">
+    <section class="sg-band sg-band--surface" aria-labelledby="sg-gallery-title">
+      <div class="sg-band__inner">
+        <div class="sg-head">
+          <p class="sg-eyebrow">アプリの画面</p>
+          <h2 id="sg-gallery-title" class="sg-h2">見て、話して、記事になるまで。</h2>
+        </div>
+
+        <div class="sg-gallery">
+          <ul class="sg-gallery__track">
+            {
+              gallery.map((shot) => (
+                <li class="sg-gallery__item">
+                  <DeviceFrame src={shot.src} alt={shot.alt} />
+                  <h3>{shot.caption}</h3>
+                  <p>{shot.body}</p>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="sg-band sg-band--alt" id="sg-steps" aria-labelledby="sg-steps-title">
       <div class="sg-band__inner">
         <div class="sg-head">
           <p class="sg-eyebrow">使い方</p>
@@ -321,7 +375,7 @@ const privacyPoints = [
       </div>
     </section>
 
-    <section class="sg-band sg-band--alt" id="sg-features" aria-labelledby="sg-features-title">
+    <section class="sg-band sg-band--surface" id="sg-features" aria-labelledby="sg-features-title">
       <div class="sg-band__inner">
         <div class="sg-head">
           <p class="sg-eyebrow">機能</p>
@@ -346,7 +400,7 @@ const privacyPoints = [
       </div>
     </section>
 
-    <section class="sg-band sg-band--surface" id="sg-plans" aria-labelledby="sg-plans-title">
+    <section class="sg-band sg-band--alt" id="sg-plans" aria-labelledby="sg-plans-title">
       <div class="sg-band__inner">
         <div class="sg-head">
           <p class="sg-eyebrow">プラン</p>
@@ -436,7 +490,7 @@ const privacyPoints = [
       </div>
     </section>
 
-    <section class="sg-band sg-band--alt" id="sg-faq" aria-labelledby="sg-faq-title">
+    <section class="sg-band sg-band--surface" id="sg-faq" aria-labelledby="sg-faq-title">
       <div class="sg-band__inner">
         <div class="sg-head">
           <p class="sg-eyebrow">よくある質問</p>
@@ -456,7 +510,7 @@ const privacyPoints = [
       </div>
     </section>
 
-    <section class="sg-band sg-band--surface sg-privacy" aria-labelledby="sg-privacy-title">
+    <section class="sg-band sg-band--alt sg-privacy" aria-labelledby="sg-privacy-title">
       <div class="sg-band__inner">
         <div class="sg-privacy__head">
           <span class="sg-privacy__icon">

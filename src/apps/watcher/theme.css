@@ -401,6 +401,56 @@
   height: auto;
 }
 
+/* ---------- スクリーンショットギャラリー ---------- */
+
+.wt-gallery {
+  margin-inline: calc(var(--wt-gutter) * -1);
+}
+
+.wt-gallery__track {
+  display: flex;
+  gap: clamp(1rem, 3vw, 1.75rem);
+  margin: 0;
+  padding: 0.25rem var(--wt-gutter) 1.5rem;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+}
+
+.wt-gallery__item {
+  flex: 0 0 auto;
+  width: min(220px, 62vw);
+  scroll-snap-align: center;
+}
+
+.wt-gallery__item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--wt-radius);
+  box-shadow: var(--wt-shadow-lg);
+}
+
+@media (min-width: 900px) {
+  .wt-gallery {
+    margin-inline: 0;
+  }
+
+  .wt-gallery__track {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    overflow: visible;
+    padding-inline: 0;
+  }
+
+  .wt-gallery__item {
+    width: auto;
+  }
+}
+
 /* ---------- テーマ例のチップ ---------- */
 
 .wt-chips {

@@ -12,7 +12,7 @@ export const app: AppConfig = {
   },
   supportEmail: 'support@legal.testkun.net',
   appStoreUrl: 'https://apps.apple.com/jp/app/id6773638323',
-  version: '1.3.0',
+  version: '1.5.1',
   theme: {
     bg: '#f5f0e8',
     surface: '#ffffff',
