@@ -1,4 +1,5 @@
 import type { AppConfig } from '@/apps/types';
+import icon from '@/assets/watcher/icon.png';
 
 /**
  * トークンは watcher-app の `src/constants/theme.ts`（WatcherColors / WatcherColorsDark）に揃えています。
@@ -13,6 +14,7 @@ export const app: AppConfig = {
     en: 'AI watches what you care about, and delivers the summary.',
   },
   supportEmail: 'support@legal.testkun.net',
+  icon,
   theme: {
     bg: '#f8fafc',
     surface: '#ffffff',

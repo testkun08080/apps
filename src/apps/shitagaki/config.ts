@@ -1,4 +1,5 @@
 import type { AppConfig } from '@/apps/types';
+import icon from '@/assets/shitagaki/icon.png';
 
 /**
  * トークンはアプリ本体（photo-diary）の `src/styles/themes.ts` に揃えています。
@@ -16,6 +17,7 @@ export const app: AppConfig = {
     en: 'Just talk while you look, and get an article',
   },
   supportEmail: 'support@legal.testkun.net',
+  icon,
   // 2026-09-11 に日本ストアで公開。ストアフロントを固定しない `/app/id...` 形式にして、
   // 英語版の公開後もそのまま閲覧者の国のストアへ飛ばせるようにしています。
   appStoreUrl: 'https://apps.apple.com/app/id6774141263',

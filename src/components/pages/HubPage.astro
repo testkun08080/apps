@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import LegalLayout from '@/layouts/LegalLayout.astro';
 import { apps } from '@/apps';
 import { localizedApp, localizePath, t, type Locale } from '@/i18n';
@@ -17,10 +18,21 @@ const localizedApps = apps.map((app) => localizedApp(app, locale));
   <ul class="app-grid">
     {
       localizedApps.map((app) => (
-        <li class="app-card" style={`border-top: 3px solid ${app.theme.accent}`}>
-          <h2>
-            <a href={localizePath(`${app.slug}/`, locale)}>{app.name}</a>
-          </h2>
+        <li class="app-card" style={`border-top-color: ${app.theme.accent}`}>
+          <div class="app-card__header">
+            {
+              app.icon ? (
+                <Image class="app-card__icon" src={app.icon} alt="" width={48} height={48} loading="eager" />
+              ) : (
+                <span class="app-card__icon app-card__icon--fallback" style={`background: ${app.theme.accent}`}>
+                  {app.name.charAt(0)}
+                </span>
+              )
+            }
+            <h2>
+              <a href={localizePath(`${app.slug}/`, locale)}>{app.name}</a>
+            </h2>
+          </div>
           <p>{app.tagline}</p>
           <div class="app-card__links">
             <a href={localizePath(`${app.slug}/`, locale)}>{t(locale, 'hub.appPage')}</a>
