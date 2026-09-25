@@ -43,15 +43,17 @@ const navItems = appForLinks
 ---
 
 <BaseLayout title={title} app={appForLinks} locale={locale}>
-  <header class="site-header">
-    <div class="site-header__inner">
-      <p class="site-header__title">
-        <a href={appForLinks ? localizePath(`${appForLinks.slug}/`, locale) : localizePath('', locale)}>
-          {app ? app.name : t(locale, 'hub.title')}
-        </a>
-      </p>
-    </div>
-  </header>
+  {
+    appForLinks && (
+      <header class="site-header">
+        <div class="site-header__inner">
+          <p class="site-header__title">
+            <a href={localizePath(`${appForLinks.slug}/`, locale)}>{app?.name ?? appForLinks.name}</a>
+          </p>
+        </div>
+      </header>
+    )
+  }
 
   <main class="legal-main">
     <h1 class="page-title">{title}</h1>

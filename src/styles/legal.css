@@ -147,12 +147,16 @@
   margin: 0;
 }
 
-.app-grid {
+.prose .app-grid {
   display: grid;
   gap: var(--space-lg);
   margin: var(--space-xl) 0 0;
   padding: 0;
   list-style: none;
+}
+
+.prose .app-grid > .app-card {
+  margin-bottom: 0;
 }
 
 .app-card {
