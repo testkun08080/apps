@@ -19,7 +19,8 @@ interface Props {
     | 'layers'
     | 'lock'
     | 'check'
-    | 'chevron';
+    | 'chevron'
+    | 'apple';
 }
 
 const { name } = Astro.props;
@@ -49,14 +50,19 @@ const paths: Record<Props['name'], string> = {
   lock: '<rect x="4" y="10" width="16" height="11" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>',
   check: '<path d="m4 12.5 5 5 11-11"/>',
   chevron: '<path d="m9 5 7 7-7 7"/>',
+  apple:
+    '<path d="M16.5 1.6c0 1.2-.45 2.3-1.34 3.2-.9.9-1.98 1.44-3.14 1.35a3.4 3.4 0 0 1 1.2-3.2A4.9 4.9 0 0 1 16.5 1.6Zm3.9 15.9c-.5 1.16-.86 1.9-1.5 2.93-.9 1.44-2.16 3.23-3.73 3.24-1.4.01-1.75-.92-3.65-.9-1.9.01-2.29.92-3.68.9-1.57-.01-2.77-1.62-3.66-3.06-2.5-4.03-2.77-8.76-1.22-11.27a5.6 5.6 0 0 1 4.6-2.8c1.66 0 2.7.93 4.08.93 1.33 0 2.14-.93 4.06-.93 1.45 0 3 .8 4.09 2.2-3.6 2.02-3.01 7.3.61 8.76Z"/>',
 };
+
+const filled = new Set<Props['name']>(['apple']);
+const isFilled = filled.has(name);
 ---
 
 <svg
   class="wt-icon"
   viewBox="0 0 24 24"
-  fill="none"
-  stroke="currentColor"
+  fill={isFilled ? 'currentColor' : 'none'}
+  stroke={isFilled ? 'none' : 'currentColor'}
   stroke-width="1.6"
   stroke-linecap="round"
   stroke-linejoin="round"
