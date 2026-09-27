@@ -15,6 +15,8 @@ export const app: AppConfig = {
   },
   supportEmail: 'support@legal.testkun.net',
   icon,
+  appStoreUrl: 'https://apps.apple.com/us/app/id6772545052',
+  version: '1.0.0',
   theme: {
     bg: '#f8fafc',
     surface: '#ffffff',

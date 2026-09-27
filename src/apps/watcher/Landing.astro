@@ -238,6 +238,16 @@ const description =
         <a href="#wt-features">機能</a>
         <a href="#wt-plans">プラン</a>
         <a href={localizePath(`${app.slug}/support/`, locale)}>{t(locale, 'nav.support')}</a>
+        {
+          app.appStoreUrl && (
+            <a class="wt-btn wt-btn--primary wt-btn--sm" href={app.appStoreUrl} rel="noopener">
+              <Icon name="apple" />
+              <span>
+                App Store<span class="wt-nav__cta-suffix"> で入手</span>
+              </span>
+            </a>
+          )
+        }
       </nav>
     </div>
   </header>
@@ -247,17 +257,21 @@ const description =
       <div class="wt-band__inner wt-hero__inner">
         <div class="wt-hero__copy">
           <p class="wt-hero__badges">
-            <span class="wt-badge wt-badge--dot">App Store にて近日公開</span>
+            <span class="wt-badge wt-badge--dot">App Store で配信中</span>
           </p>
           <h1 class="wt-h1">あなたの「気になる」を、<br />AI が見張って、<br />まとめて届ける。</h1>
           <p class="wt-lead">
             Watcher は、気になるテーマを登録しておくと、AI が定期的に調べて要点と出典つきのレポートにまとめるアプリです。自分で検索して回る時間を、届いたまとめを読む時間に置き換えます。
           </p>
           <div class="wt-cta">
-            <a class="wt-btn wt-btn--primary" href="#wt-plans">
-              プランを見る
-              <Icon name="chevron" />
-            </a>
+            {
+              app.appStoreUrl && (
+                <a class="wt-btn wt-btn--primary" href={app.appStoreUrl} rel="noopener">
+                  <Icon name="apple" />
+                  App Store で入手
+                </a>
+              )
+            }
             <a
               class="wt-btn wt-btn--ghost"
               href={localizePath(`${app.slug}/support/`, locale)}
@@ -266,7 +280,9 @@ const description =
               <Icon name="chevron" />
             </a>
           </div>
-          <p class="wt-hero__meta">iPhone / iPad に対応｜表示言語は日本語 / 英語</p>
+          <p class="wt-hero__meta">
+            iPhone / iPad に対応｜表示言語は日本語 / 英語{app.version && `｜v${app.version}`}
+          </p>
         </div>
 
         <div class="wt-hero__art">
@@ -520,7 +536,14 @@ const description =
         <h2 class="wt-h2">気になることは、見張らせておけばいい。</h2>
         <p class="wt-sub">追いかけるのはアプリの仕事。あなたは、届いたまとめを読むだけ。</p>
         <div class="wt-cta wt-cta--center">
-          <span class="wt-badge wt-badge--dot">App Store にて近日公開</span>
+          {
+            app.appStoreUrl && (
+              <a class="wt-btn wt-btn--primary" href={app.appStoreUrl} rel="noopener">
+                <Icon name="apple" />
+                App Store で入手
+              </a>
+            )
+          }
         </div>
         <p class="wt-note wt-note--fine">レポートは AI が生成したものです。重要な判断に使う際は、記載された出典もあわせてご確認ください。</p>
       </div>
