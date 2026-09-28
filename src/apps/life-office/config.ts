@@ -11,7 +11,7 @@ export const app: AppConfig = {
     ja: '毎朝の出勤儀式を、スマホで。',
     en: 'Your morning clock-in ritual, on your phone.',
   },
-  supportEmail: 'support@legal.testkun.net',
+  supportEmail: 'support-app+life-office@testkun.net',
   icon,
   appStoreUrl: 'https://apps.apple.com/jp/app/id6773638323',
   version: '1.5.1',
