@@ -13,7 +13,7 @@ export const app: AppConfig = {
     ja: 'あなたの「気になる」を、AI が見張って、まとめて届ける。',
     en: 'AI watches what you care about, and delivers the summary.',
   },
-  supportEmail: 'support@legal.testkun.net',
+  supportEmail: 'support-app+watcher@testkun.net',
   icon,
   appStoreUrl: 'https://apps.apple.com/us/app/id6772545052',
   version: '1.0.0',
