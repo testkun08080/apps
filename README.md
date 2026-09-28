@@ -84,7 +84,7 @@ npm run dev
 
 1. DNS: `apps` CNAME → 既存 `legal` と同じターゲット（通常 `testkun08080.github.io`）、プロキシ設定も同じ
 2. Redirect Rule: Host `legal.testkun.net` → `https://apps.testkun.net${uri.path}${uri.query}`（301）
-3. Email Routing（`support@legal.testkun.net`）はそのまま
+3. Email Routing: サポート窓口は `support-app@testkun.net`（デフォルト）と、アプリごとのサブアドレス `support-app+<slug>@testkun.net`（例: `support-app+watcher@testkun.net`）を使用。個別ルールを増やさなくても、キャッチオール転送先が同じ宛先（自分のメール）になっていれば `+タグ` 付きのアドレスもそのまま届く。受信側（Gmail など）で `To:` に `+watcher` `+shitagaki` `+life-office` を含むかでフィルタ・ラベル分けすれば、どのアプリ宛の問い合わせかを自動判別できる
 
 **GA4**
 
@@ -171,6 +171,8 @@ npm run new-app my-app "My App Name" support@example.com
 - `src/content/legal/<slug>/ja/terms.md`
 
 `src/apps/<slug>/config.ts` を置くと registry に自動登録されます。
+
+サポートメールは `support-app+<slug>@testkun.net` の形式（サブアドレス）を指定すると、どのアプリからの問い合わせかを受信側で判別しやすくなります。
 
 追加後の作業:
 
