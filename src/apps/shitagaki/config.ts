@@ -16,7 +16,7 @@ export const app: AppConfig = {
     ja: '写真を見ながら話すだけで記事に',
     en: 'Just talk while you look, and get an article',
   },
-  supportEmail: 'support@legal.testkun.net',
+  supportEmail: 'support-app+shitagaki@testkun.net',
   icon,
   // 2026-09-11 に日本ストアで公開。ストアフロントを固定しない `/app/id...` 形式にして、
   // 英語版の公開後もそのまま閲覧者の国のストアへ飛ばせるようにしています。
