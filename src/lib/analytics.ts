@@ -1,4 +1,6 @@
+import { createHash } from 'node:crypto';
 import { locales } from '@/config/i18n';
+import { jsonForInlineScript } from '@/lib/json';
 
 export type PageKind = 'hub' | 'landing' | 'privacy' | 'terms' | 'support' | 'other';
 
@@ -45,4 +47,22 @@ export function parsePageAnalytics(pathname: string, knownAppSlug?: string): Pag
   }
 
   return { appSlug, pageKind: 'other' };
+}
+
+/** GA4 の初期化用インラインスクリプト（GoogleAnalytics.astro と CSP ハッシュ計算で共有）。 */
+export function buildGaConfigScript(measurementId: string, { appSlug, pageKind }: PageAnalytics): string {
+  return `window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', ${jsonForInlineScript(measurementId)}, {
+  send_page_view: true,
+  content_group1: ${jsonForInlineScript(appSlug)},
+  app_slug: ${jsonForInlineScript(appSlug)},
+  page_kind: ${jsonForInlineScript(pageKind)}
+});`;
+}
+
+/** CSP の script-src 用ハッシュ（`'sha256-...'`）。 */
+export function cspHash(source: string): string {
+  return `'sha256-${createHash('sha256').update(source).digest('base64')}'`;
 }
