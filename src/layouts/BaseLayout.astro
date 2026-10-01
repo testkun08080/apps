@@ -5,7 +5,8 @@ import { themeToCss } from '@/lib/theme';
 import { site } from '@/config/site';
 import { defaultLocale, type Locale } from '@/config/i18n';
 import { getAlternateUrls, resolveLocalized } from '@/i18n';
-import { parsePageAnalytics } from '@/lib/analytics';
+import { buildGaConfigScript, cspHash, parsePageAnalytics } from '@/lib/analytics';
+import { jsonForInlineScript } from '@/lib/json';
 import GoogleAnalytics from '@/components/GoogleAnalytics.astro';
 
 interface Props {
@@ -35,11 +36,28 @@ const pageAnalytics = parsePageAnalytics(Astro.url.pathname, app?.slug);
 const gaId = site.googleAnalyticsId;
 const enableGa = import.meta.env.PROD && gaId.length > 0;
 
+// GitHub Pages ではレスポンスヘッダを設定できないため、<meta> で CSP を付与する。
+// （frame-ancestors / report-uri / sandbox は meta では無効）
+const gaHosts = ['https://www.googletagmanager.com', 'https://*.google-analytics.com', 'https://*.analytics.google.com'];
+const scriptSrc = ["'self'", ...(enableGa ? [cspHash(buildGaConfigScript(gaId, pageAnalytics)), gaHosts[0]] : [])];
+const csp = [
+  "default-src 'self'",
+  `script-src ${scriptSrc.join(' ')}`,
+  // Astro のスコープ CSS とテーマ変数は <style> / style 属性でインライン出力される
+  "style-src 'self' 'unsafe-inline'",
+  `img-src 'self' data:${enableGa ? ` ${gaHosts.join(' ')}` : ''}`,
+  `connect-src 'self'${enableGa ? ` ${gaHosts.join(' ')}` : ''}`,
+  "font-src 'self'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+].join('; ');
+
 // アプリの配信ページ（トップ）にのみ SoftwareApplication の構造化データを付与する。
 // 配信 URL が未設定＝未公開アプリなので、公開前のページには出さない。
 const softwareAppJsonLd =
   isAppHome && app && app.appStoreUrl
-    ? JSON.stringify({
+    ? jsonForInlineScript({
         '@context': 'https://schema.org',
         '@type': 'SoftwareApplication',
         name: appName,
@@ -64,6 +82,8 @@ const softwareAppJsonLd =
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content={csp} />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="description" content={pageDescription} />
     <title>{pageTitle}</title>
 

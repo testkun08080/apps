@@ -1,4 +1,5 @@
 ---
+import { jsonForInlineScript } from '@/lib/json';
 import { Image } from 'astro:assets';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import LanguageSwitcher from '@/components/LanguageSwitcher.astro';
@@ -69,7 +70,7 @@ const gallery = [
   { src: shotPreview, alt: 'Article preview screen with a toggle between article and Markdown view', caption: 'Article / Markdown preview', body: 'Compare the finished look before you export.' },
 ];
 
-const faqJsonLd = JSON.stringify({
+const faqJsonLd = jsonForInlineScript({
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
   mainEntity: faqs.map((faq) => ({

@@ -1,0 +1,5 @@
+Contact: mailto:support@legal.testkun.net
+Expires: 2027-09-30T00:00:00.000Z
+Preferred-Languages: ja, en
+Canonical: https://apps.testkun.net/.well-known/security.txt
+Policy: https://github.com/testkun08080/apps/blob/main/SECURITY.md

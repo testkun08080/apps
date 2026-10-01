@@ -42,7 +42,17 @@ if (existsSync(appDir) || existsSync(join(root, 'src/content/legal', slug))) {
   process.exit(1);
 }
 
+// 値は TypeScript / Markdown のソースにそのまま埋め込まれるため、コードや構造を壊す文字を拒否する
+if (/['"`\\$<>{}\r\n]/.test(name) || name.length > 100) {
+  console.error('Error: display name must be under 100 chars and must not contain quotes, backslashes, $, <, >, { } or line breaks');
+  process.exit(1);
+}
+
 const supportEmail = supportEmailArg ?? 'support@example.com';
+if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(supportEmail)) {
+  console.error(`Error: invalid support email "${supportEmail}"`);
+  process.exit(1);
+}
 const tagline = `${name} のサポート・法務ページ`;
 const updatedDate = new Date().toISOString().slice(0, 10);
 
