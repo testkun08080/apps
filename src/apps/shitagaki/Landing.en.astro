@@ -40,7 +40,7 @@ const faqs = [
   },
   {
     q: 'Are my photos and recordings sent to a server?',
-    a: 'Original photo files and recordings are not. Photos, recordings and memos are stored on your device, and can sync via iCloud across devices on the same Apple ID when you enable it. Only when you run AI outline generation do we send text (title, memo, capture time and so on) plus a small list thumbnail of each photo to Google Gemini via Cloudflare.',
+    a: 'Original photo files and recordings are not. Photos, recordings and memos are stored on your device, and sync automatically via iCloud across devices on the same Apple ID. Only when you run AI outline generation do we send text (title, memo, capture time and so on) plus a small list thumbnail of each photo to Google Gemini via Cloudflare.',
   },
   {
     q: 'Does it work offline?',
@@ -135,6 +135,11 @@ const features = [
     body: 'After AI generates the outline, undo or redo one photo’s text at a time.',
   },
   {
+    icon: 'image-settings',
+    title: 'Edit photos in the app',
+    body: 'Crop, rotate and flip, or mark up a photo with iOS Markup. In the lightbox, scrub the filmstrip to jump between photos quickly.',
+  },
+  {
     icon: 'markdown',
     title: 'Article / Markdown preview',
     body: 'Switch between how it will look and the Markdown behind it.',
@@ -158,6 +163,11 @@ const features = [
     icon: 'palette',
     title: 'Light / dark and six accent colors',
     body: 'Follow the device setting or switch by hand. Six accent colors to choose from.',
+  },
+  {
+    icon: 'text',
+    title: 'Available in 8 languages',
+    body: 'English, Japanese, Korean, Traditional Chinese, German, French, Spanish and Thai. The outline the AI writes follows the app language.',
   },
   {
     icon: 'search',
@@ -227,7 +237,7 @@ const comparison = [
 
 const privacyPoints = [
   'No account and no sign-in',
-  'Photos, recordings, memos and drafts are stored on your device, with optional iCloud sync',
+  'Photos, recordings, memos and drafts are stored on your device and sync automatically via iCloud across devices on the same Apple ID',
   'Original photo files are never sent to our servers',
   'Only when you run AI outline generation are text and list thumbnails sent to Gemini (Groq on failure)',
   'Whether the place name is sent can be turned off per draft (off by default; coordinates are never sent)',

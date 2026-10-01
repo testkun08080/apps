@@ -16,7 +16,7 @@ In addition to these terms, use of the App is subject to Apple's [Standard End U
 
 ## 2. What the App does
 
-The App is an iOS app for turning what you say while looking at photos you picked into a draft article in Markdown. Recording, transcription, editing and previewing happen on your device; only AI outline generation uses an external service. Optional iCloud sync is available across devices on the same Apple ID. See the [Privacy Policy](https://apps.testkun.net/en/shitagaki/privacy/) for details on what is handled.
+The App is an iOS app for turning what you say while looking at photos you picked into a draft article in Markdown. Recording, transcription, editing and previewing happen on your device; only AI outline generation uses an external service. iCloud sync runs automatically across devices on the same Apple ID. See the [Privacy Policy](https://apps.testkun.net/en/shitagaki/privacy/) for details on what is handled.
 
 ## 3. What is free
 

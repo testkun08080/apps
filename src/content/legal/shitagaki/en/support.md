@@ -3,7 +3,7 @@ title: Support
 docType: support
 appSlug: shitagaki
 locale: en
-updated: 2026-09-19
+updated: 2026-10-01
 ---
 
 Replies can take a few days. For bug reports, it helps to include your device model, your iOS version, and what you were doing when it happened.
@@ -11,15 +11,15 @@ Replies can take a few days. For bug reports, it helps to include your device mo
 ## Requirements
 
 - iPhone / iPad (iOS 26 or later)
-- English and Japanese. The App follows your device language, and you can pick one under Settings > Language
+- English, Japanese, Korean, Traditional Chinese, German, French, Spanish and Thai. The App follows your device language, and you can pick one under Settings > Language
 - No account or sign-in
-- On the [App Store](https://apps.apple.com/app/id6774141263) (current version 1.2.0)
+- On the [App Store](https://apps.apple.com/app/id6774141263) (current version 1.2.1)
 
 ## Frequently asked questions
 
 ### Where are my photos and recordings stored?
 
-Photos, audio, memos and drafts are stored on your device. With Settings → iCloud sync enabled, they also sync across iPhone and iPad on the same Apple ID via CloudKit. We do not keep a copy of your drafts on our servers.
+Photos, audio, memos and drafts are stored on your device. They also sync automatically across iPhone and iPad on the same Apple ID via CloudKit. We do not keep a copy of your drafts on our servers.
 
 Only when you generate an outline do we send memo text, photo details (title, capture time, optional place name), and a **small list thumbnail of each photo** via a Cloudflare Worker to Google Gemini (text only to Groq if Gemini fails). Original photo files and audio are never sent.
 
@@ -45,7 +45,7 @@ The monthly generation allowance and the exporting that came with AI Plus stop. 
 
 ### What is iCloud sync?
 
-Check status under Settings → iCloud sync. Drafts (photos, memos and voice) sync across devices on the same Apple ID. Purchases, the free AI quota and rewarded-video credits do not sync. After changing devices, also use Settings → Restore purchases.
+Sync runs automatically; there is nothing to switch on. Drafts (photos, memos and voice) sync across devices on the same Apple ID. Purchases, the free AI quota and rewarded-video credits do not sync. After changing devices, also use Settings → Restore purchases.
 
 ### I want to change the quality of exported images
 
