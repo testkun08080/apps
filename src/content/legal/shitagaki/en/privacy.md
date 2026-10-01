@@ -3,7 +3,7 @@ title: Privacy Policy
 appSlug: shitagaki
 docType: privacy
 locale: en
-updated: 2026-09-19
+updated: 2026-10-01
 ---
 
 > This is a translation of the Japanese original. If the two differ, the [Japanese version](https://apps.testkun.net/shitagaki/privacy/) governs.
@@ -18,9 +18,9 @@ The App **does not require an account**. Drafts, photo references, recordings an
 
 | Data | Purpose | Where it is stored |
 |------|---------|--------------------|
-| Drafts (title, outline, memos) | Providing the App's features | SQLite on your device; also in your iCloud when sync is enabled |
-| Photo references and photos / list thumbnails copied into the App | Showing, exporting and syncing photos used in an article | On your device; photo files also in your iCloud when sync is enabled. **Original photo files are never sent to our servers** (list thumbnails for outline generation are covered in §3) |
-| Recordings and transcripts | Input while you talk | On your device. Transcription runs on the device. Voice memo files tied to a draft also sync via iCloud when enabled |
+| Drafts (title, outline, memos) | Providing the App's features | SQLite on your device; also in your iCloud through automatic sync |
+| Photo references and photos / list thumbnails copied into the App | Showing, exporting and syncing photos used in an article | On your device; photo files also in your iCloud through automatic sync. **Original photo files are never sent to our servers** (list thumbnails for outline generation are covered in §3) |
+| Recordings and transcripts | Input while you talk | On your device. Transcription runs on the device. Voice memo files tied to a draft also sync via iCloud |
 | Capture time and place name (optional) | On-screen display and as a hint for AI outline generation | On your device. Sending to the AI is opt-in (off by default) |
 | Free AI outline generation counts | Calculating what is left of the free quota | Counted on our **Cloudflare Worker using the device identifier (iOS IDFV)**. The count does not reset on reinstall. Monthly AI Plus quotas and similar are also kept on device |
 | App settings (theme, export quality and so on) | Keeping your preferences | On your device (not synced via iCloud) |
@@ -46,7 +46,7 @@ The Worker's operational logs may record processing volume such as token counts,
 
 ## 4. iCloud sync
 
-When Settings → iCloud sync is enabled, drafts (photos, memos, voice, outlines and per-photo AI history) sync across iPhone and iPad on the same Apple ID via **Apple CloudKit (private database)**. The data lives on your Apple account; we do not keep a copy of your drafts on our servers.
+Drafts (photos, memos, voice, outlines and per-photo AI history) sync across iPhone and iPad on the same Apple ID via **Apple CloudKit (private database)**, automatically and without any setting to turn on. The data lives on your Apple account; we do not keep a copy of your drafts on our servers.
 
 The following do **not** sync via iCloud:
 
