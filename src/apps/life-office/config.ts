@@ -14,7 +14,7 @@ export const app: AppConfig = {
   supportEmail: 'support-app+life-office@testkun.net',
   icon,
   appStoreUrl: 'https://apps.apple.com/jp/app/id6773638323',
-  version: '1.5.1',
+  version: '1.5.2',
   theme: {
     bg: '#f5f0e8',
     surface: '#ffffff',

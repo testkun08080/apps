@@ -19,6 +19,13 @@ import shotCalendar from '@/assets/life-office/calendar.png';
 import shotStats from '@/assets/life-office/stats-monthly.png';
 import shotHeatmap from '@/assets/life-office/stats-heatmap.png';
 import shotWidget from '@/assets/life-office/widget.png';
+import ipadHome from '@/assets/life-office/ipad-home.png';
+import ipadList from '@/assets/life-office/ipad-list.png';
+import ipadReceipt from '@/assets/life-office/ipad-receipt.png';
+import watchPunch from '@/assets/life-office/watch-1.png';
+import watchWorking from '@/assets/life-office/watch-2.png';
+import watchDone from '@/assets/life-office/watch-3.png';
+import watchComplication from '@/assets/life-office/watch-4.png';
 
 interface Props extends AppPageProps {}
 
@@ -59,8 +66,54 @@ const gallery = [
   },
 ];
 
+const ipadShots = [
+  {
+    src: ipadHome,
+    caption: 'Sidebar navigation on a wide screen',
+    alt: 'iPad home screen with a sidebar on the left, next clock-in time 08:30 and a punch button in the center',
+  },
+  {
+    src: ipadList,
+    caption: 'Record list',
+    alt: 'iPad record list showing monthly punch records in date order',
+  },
+  {
+    src: ipadReceipt,
+    caption: 'Punch receipt',
+    alt: 'iPad punch receipt with name, date, time and notes printed',
+  },
+];
+
+const watchShots = [
+  {
+    src: watchPunch,
+    caption: 'Clock in with the Crown',
+    alt: 'Apple Watch before clock-in, with a clock-in slider driven by the Digital Crown',
+  },
+  {
+    src: watchWorking,
+    caption: 'Working',
+    alt: 'Apple Watch while working, showing elapsed time, clock-in time and a clock-out slider',
+  },
+  {
+    src: watchDone,
+    caption: 'After clock-out',
+    alt: 'Apple Watch after clock-out, showing total work time and a thank-you message',
+  },
+  {
+    src: watchComplication,
+    caption: 'Watch face (Pro)',
+    alt: 'LIFE OFFICE complication on an Apple Watch face showing work time and clock-in/out times',
+  },
+];
+
 const features = [
   { icon: 'swipe', title: 'Swipe to punch', body: 'Record clock-in and clock-out as a daily ritual.' },
+  {
+    icon: 'clock',
+    title: 'Punch from Apple Watch',
+    body: 'Clock in and out from your wrist with the Digital Crown, a tap, or a double tap. Punches sync to your iPhone automatically.',
+  },
   { icon: 'shake', title: 'Shake to punch', body: 'Punch by shaking your device. Toggle ON/OFF in settings.' },
   { icon: 'clock', title: 'Retroactive punch', body: 'Add records you forgot to punch earlier.' },
   {
@@ -105,6 +158,11 @@ const proFeatures = [
   },
   {
     icon: 'widget',
+    title: 'Apple Watch complication',
+    body: 'Show your work status and elapsed time on your watch face and in the Smart Stack.',
+  },
+  {
+    icon: 'widget',
     title: 'Home screen widget',
     body: 'See today\'s punch status and this month\'s total hours at a glance.',
   },
@@ -140,7 +198,9 @@ const comparison = [
   { label: 'iCloud sync', free: true },
   { label: 'Light theme', free: true },
   { label: 'Dark theme / system follow', free: false },
+  { label: 'Clock in/out from Apple Watch', free: true },
   { label: 'Home screen widget', free: false },
+  { label: 'Apple Watch complication (watch face & Smart Stack)', free: false },
   { label: 'Extended stats (weekly & heatmap)', free: false },
   { label: 'Note search', free: false },
   { label: 'CSV / PDF export, CSV import', free: false },
@@ -160,7 +220,7 @@ const privacyPoints = [
   title="A Personal Punch-Clock & Timecard App"
   app={app}
   locale={locale}
-  description="LIFE OFFICE is a personal punch-clock and timecard app: swipe once to clock in or out. No GPS, no company integration — everything stays on your device. One daily ritual for your lazy self. Free to download for iPhone and iPad."
+  description="LIFE OFFICE is a personal punch-clock and timecard app: swipe once to clock in or out. No GPS, no company integration — everything stays on your device. One daily ritual for your lazy self. Free to download for iPhone, iPad and Apple Watch."
   ogImage={icon.src}
   schemaCategory="ProductivityApplication"
   isAppHome
@@ -208,7 +268,7 @@ const privacyPoints = [
             </a>
           </div>
           <p class="lo-hero__meta">
-            For iPhone / iPad · Requires iOS 16.0 or later{app.version && ` · v${app.version}`}
+            For iPhone / iPad / Apple Watch · Requires iOS 17.0 or later{app.version && ` · v${app.version}`}
           </p>
         </div>
 
@@ -258,7 +318,69 @@ const privacyPoints = [
           </ul>
         </div>
 
-        <p class="lo-gallery__note">For iPhone / iPad</p>
+        <p class="lo-gallery__note">For iPhone / iPad / Apple Watch</p>
+      </div>
+    </section>
+
+    <section class="lo-band lo-band--alt" aria-labelledby="lo-ipad-title">
+      <div class="lo-band__inner lo-multi">
+        <div class="lo-multi__copy">
+          <p class="lo-eyebrow">iPad</p>
+          <h2 id="lo-ipad-title" class="lo-h2">Made for the bigger screen on iPad.</h2>
+          <p>On iPad, LIFE OFFICE switches to a sidebar layout so you can jump between Punch, Records, Search and Settings in one tap.</p>
+          <ul class="lo-multi__list">
+            <li>A sidebar layout that fits wide screens</li>
+            <li>Punch, record list and receipts, sized for iPad</li>
+            <li>iCloud sync keeps your records shared with your iPhone</li>
+          </ul>
+        </div>
+        <ul class="lo-multi__shots lo-multi__shots--ipad">
+          {
+            ipadShots.map((shot) => (
+              <li>
+                <DeviceFrame
+                  variant="tablet"
+                  src={shot.src}
+                  alt={shot.alt}
+                  caption={shot.caption}
+                  widths={[260, 420, 520]}
+                  sizes="(max-width: 640px) 42vw, 250px"
+                />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="lo-band lo-band--surface" aria-labelledby="lo-watch-title">
+      <div class="lo-band__inner lo-multi lo-multi--reverse">
+        <div class="lo-multi__copy">
+          <p class="lo-eyebrow">Apple Watch</p>
+          <h2 id="lo-watch-title" class="lo-h2">Punch in from your wrist.</h2>
+          <p>The Apple Watch app lets you clock in without taking out your iPhone. Punches made on the Watch sync to the iPhone app automatically.</p>
+          <ul class="lo-multi__list">
+            <li>Clock in and out for free — turn the Digital Crown, tap, or double tap</li>
+            <li>Watch face and Smart Stack complication is a Pro feature</li>
+            <li>Requires watchOS 10 or later</li>
+          </ul>
+        </div>
+        <ul class="lo-multi__shots lo-multi__shots--watch">
+          {
+            watchShots.map((shot) => (
+              <li>
+                <DeviceFrame
+                  variant="watch"
+                  src={shot.src}
+                  alt={shot.alt}
+                  caption={shot.caption}
+                  widths={[160, 240, 320]}
+                  sizes="(max-width: 640px) 40vw, 150px"
+                />
+              </li>
+            ))
+          }
+        </ul>
       </div>
     </section>
 
