@@ -14,6 +14,44 @@ export type Release = {
  */
 export const releases: Release[] = [
   {
+    version: '1.5.2',
+    date: '2026-09-30',
+    highlights: {
+      ja: [
+        'Apple Watch に対応しました。手首から出勤・退勤を打刻できます（Digital Crown を回す／タップ／ダブルタップ）',
+        'Watch で打刻した記録は、自動で iPhone のアプリに反映されます',
+        'Pro では、Apple Watch の文字盤やスマートスタックに、出勤状態と経過時間を表示できます',
+      ],
+      en: [
+        'LIFE OFFICE now works on Apple Watch. Clock in and out from your wrist by turning the Digital Crown, tapping, or double tapping',
+        'Punches made on Apple Watch sync to the iPhone app automatically',
+        'Pro: show your work status and elapsed time on your watch face and in the Smart Stack',
+      ],
+    },
+  },
+  {
+    version: '1.5.1',
+    date: '2026-09-23',
+    highlights: {
+      ja: [
+        '打刻スワイプ中、キーボードを「入力を終える」で閉じられるようになりました',
+        '退勤スワイプでも、出勤と同じようにメモを書いてから完了できるようになりました',
+        '週の終わり・月の終わりに、勤務サマリを共有できるようになりました',
+        '記録の年月をタップして、目的の月へすぐ移動できるようになりました',
+        '統計画面から、グラフ画像とキャプションを共有できるようになりました（月次は無料）',
+        'iCloud 同期がほかの端末に反映されにくいことがある不具合を修正しました',
+      ],
+      en: [
+        'Dismiss the keyboard on the punch swipe screen with “Done typing”',
+        'Clock-out swipe now supports a memo and Done, same as clock-in',
+        'Share a weekly or monthly work summary when a period ends',
+        'Jump to any month from Records by tapping the month title',
+        'Share stats as an image with a caption (monthly is free)',
+        'Fixed cases where iCloud sync rarely reached other devices',
+      ],
+    },
+  },
+  {
     version: '1.5.0',
     date: '2026-09-19',
     highlights: {

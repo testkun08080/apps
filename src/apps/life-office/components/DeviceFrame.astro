@@ -10,13 +10,15 @@ interface Props {
   eager?: boolean;
   widths?: number[];
   sizes?: string;
+  /** 端末の種類。iPhone は dynamic island 付き、iPad / Watch は画面比率とフレームが変わる */
+  variant?: 'phone' | 'tablet' | 'watch';
 }
 
-const { src, alt, caption, eager = false, widths, sizes } = Astro.props;
+const { src, alt, caption, eager = false, widths, sizes, variant = 'phone' } = Astro.props;
 ---
 
 <figure class="lo-shot">
-  <div class="lo-device">
+  <div class:list={['lo-device', variant !== 'phone' && `lo-device--${variant}`]}>
     <div class="lo-device__screen">
       <Image
         src={src}
@@ -27,7 +29,7 @@ const { src, alt, caption, eager = false, widths, sizes } = Astro.props;
         fetchpriority={eager ? 'high' : 'auto'}
       />
     </div>
-    <span class="lo-device__island" aria-hidden="true"></span>
+    {variant === 'phone' && <span class="lo-device__island" aria-hidden="true"></span>}
   </div>
   {caption && <figcaption>{caption}</figcaption>}
 </figure>

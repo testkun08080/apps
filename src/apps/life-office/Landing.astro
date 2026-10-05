@@ -20,6 +20,13 @@ import shotCalendar from '@/assets/life-office/calendar.png';
 import shotStats from '@/assets/life-office/stats-monthly.png';
 import shotHeatmap from '@/assets/life-office/stats-heatmap.png';
 import shotWidget from '@/assets/life-office/widget.png';
+import ipadHome from '@/assets/life-office/ipad-home.png';
+import ipadList from '@/assets/life-office/ipad-list.png';
+import ipadReceipt from '@/assets/life-office/ipad-receipt.png';
+import watchPunch from '@/assets/life-office/watch-1.png';
+import watchWorking from '@/assets/life-office/watch-2.png';
+import watchDone from '@/assets/life-office/watch-3.png';
+import watchComplication from '@/assets/life-office/watch-4.png';
 
 interface Props extends AppPageProps {}
 
@@ -60,8 +67,54 @@ const gallery = [
   },
 ];
 
+const ipadShots = [
+  {
+    src: ipadHome,
+    caption: 'サイドバーで出勤・記録・検索・設定へ',
+    alt: 'iPad の出勤画面。左にサイドバー、中央に次の出勤時間 08:30 と打刻ボタンが表示されている',
+  },
+  {
+    src: ipadList,
+    caption: '記録一覧',
+    alt: 'iPad の記録一覧画面。月ごとの打刻記録が日付順に並んでいる',
+  },
+  {
+    src: ipadReceipt,
+    caption: '打刻レシート',
+    alt: 'iPad の打刻レシート画面。氏名・日付・時刻・メモが印字されている',
+  },
+];
+
+const watchShots = [
+  {
+    src: watchPunch,
+    caption: 'クラウンで出勤',
+    alt: 'Apple Watch の出勤前画面。Digital Crown で動かす出勤スライダーが表示されている',
+  },
+  {
+    src: watchWorking,
+    caption: '勤務中',
+    alt: 'Apple Watch の勤務中画面。経過時間と出勤時刻、退勤スライダーが表示されている',
+  },
+  {
+    src: watchDone,
+    caption: '退勤後',
+    alt: 'Apple Watch の退勤後画面。勤務時間と「おつかれさまでした」が表示されている',
+  },
+  {
+    src: watchComplication,
+    caption: '文字盤（Pro）',
+    alt: 'Apple Watch の文字盤に表示された LIFE OFFICE のコンプリケーション。勤務時間と出勤・退勤時刻が表示されている',
+  },
+];
+
 const features = [
   { icon: 'swipe', title: 'スワイプ打刻', body: '出勤・退勤を儀式として記録します。' },
+  {
+    icon: 'clock',
+    title: 'Apple Watch で打刻',
+    body: '手首から出勤・退勤を記録。Digital Crown・タップ・ダブルタップに対応し、iPhone へ自動で反映されます。',
+  },
   { icon: 'shake', title: '振り打刻', body: '端末を振って打刻。設定で ON / OFF できます。' },
   { icon: 'clock', title: '後打刻', body: '打ち忘れた記録をあとから追加できます。' },
   {
@@ -106,6 +159,11 @@ const proFeatures = [
   },
   {
     icon: 'widget',
+    title: 'Apple Watch コンプリケーション',
+    body: '文字盤やスマートスタックに、出勤状態と経過時間を表示します。',
+  },
+  {
+    icon: 'widget',
     title: 'ホーム画面ウィジェット',
     body: '今日の打刻状況と今月の合計勤務時間を、ホーム画面から一目で。',
   },
@@ -141,7 +199,9 @@ const comparison = [
   { label: 'iCloud 同期', free: true },
   { label: 'ライトテーマ', free: true },
   { label: 'ダークテーマ／システム追従', free: false },
+  { label: 'Apple Watch での出勤・退勤打刻', free: true },
   { label: 'ホーム画面ウィジェット', free: false },
+  { label: 'Apple Watch コンプリケーション（文字盤・スマートスタック）', free: false },
   { label: '拡張統計（週次・ヒートマップ）', free: false },
   { label: 'メモ検索', free: false },
   { label: 'CSV / PDF エクスポート、CSV インポート', free: false },
@@ -161,7 +221,7 @@ const privacyPoints = [
   title="出勤・退勤をスワイプ記録する打刻アプリ"
   app={app}
   locale={locale}
-  description="LIFE OFFICE は、出勤・退勤をスワイプ一つで記録する個人用の打刻・タイムカードアプリです。GPSや会社連携は不要、記録は端末内だけに保存されます。怠惰な自分に、毎朝ひとつの儀式を。iPhone / iPad 対応、無料でダウンロードできます。"
+  description="LIFE OFFICE は、出勤・退勤をスワイプ一つで記録する個人用の打刻・タイムカードアプリです。GPSや会社連携は不要、記録は端末内だけに保存されます。怠惰な自分に、毎朝ひとつの儀式を。iPhone / iPad / Apple Watch 対応、無料でダウンロードできます。"
   ogImage={icon.src}
   schemaCategory="ProductivityApplication"
   isAppHome
@@ -209,7 +269,7 @@ const privacyPoints = [
             </a>
           </div>
           <p class="lo-hero__meta">
-            iPhone / iPad に対応｜iOS 16.0 以降が必要です{app.version && `｜v${app.version}`}
+            iPhone / iPad / Apple Watch に対応｜iOS 17.0 以降が必要です{app.version && `｜v${app.version}`}
           </p>
         </div>
 
@@ -259,7 +319,69 @@ const privacyPoints = [
           </ul>
         </div>
 
-        <p class="lo-gallery__note">iPhone / iPad に対応</p>
+        <p class="lo-gallery__note">iPhone / iPad / Apple Watch に対応</p>
+      </div>
+    </section>
+
+    <section class="lo-band lo-band--alt" aria-labelledby="lo-ipad-title">
+      <div class="lo-band__inner lo-multi">
+        <div class="lo-multi__copy">
+          <p class="lo-eyebrow">iPad</p>
+          <h2 id="lo-ipad-title" class="lo-h2">iPad では、広い画面をそのまま活かして。</h2>
+          <p>iPad ではサイドバー付きのレイアウトに。出勤・記録・検索・設定へワンタップで移動できます。</p>
+          <ul class="lo-multi__list">
+            <li>幅の広い画面に合わせた、サイドバー付きレイアウト</li>
+            <li>打刻・記録一覧・レシートも iPad サイズで見やすく</li>
+            <li>iCloud 同期で、iPhone と記録を共有</li>
+          </ul>
+        </div>
+        <ul class="lo-multi__shots lo-multi__shots--ipad">
+          {
+            ipadShots.map((shot) => (
+              <li>
+                <DeviceFrame
+                  variant="tablet"
+                  src={shot.src}
+                  alt={shot.alt}
+                  caption={shot.caption}
+                  widths={[260, 420, 520]}
+                  sizes="(max-width: 640px) 42vw, 250px"
+                />
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="lo-band lo-band--surface" aria-labelledby="lo-watch-title">
+      <div class="lo-band__inner lo-multi lo-multi--reverse">
+        <div class="lo-multi__copy">
+          <p class="lo-eyebrow">Apple Watch</p>
+          <h2 id="lo-watch-title" class="lo-h2">手首から、出勤の儀式を。</h2>
+          <p>Apple Watch アプリで、iPhone を取り出さずに打刻できます。Watch で打刻した記録は iPhone のアプリへ自動で反映されます。</p>
+          <ul class="lo-multi__list">
+            <li>出勤・退勤の打刻は無料（Digital Crown を回す／タップ／ダブルタップ）</li>
+            <li>文字盤・スマートスタックのコンプリケーションは Pro</li>
+            <li>watchOS 10 以降に対応</li>
+          </ul>
+        </div>
+        <ul class="lo-multi__shots lo-multi__shots--watch">
+          {
+            watchShots.map((shot) => (
+              <li>
+                <DeviceFrame
+                  variant="watch"
+                  src={shot.src}
+                  alt={shot.alt}
+                  caption={shot.caption}
+                  widths={[160, 240, 320]}
+                  sizes="(max-width: 640px) 40vw, 150px"
+                />
+              </li>
+            ))
+          }
+        </ul>
       </div>
     </section>
 

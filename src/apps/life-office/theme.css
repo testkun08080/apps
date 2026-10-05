@@ -417,6 +417,115 @@
   background: var(--lo-bezel);
 }
 
+/* iPad / Apple Watch フレーム */
+.lo-device--tablet {
+  padding: 0.6rem;
+  border-radius: 1.6rem;
+}
+
+.lo-device--tablet .lo-device__screen {
+  border-radius: 1.1rem;
+  aspect-ratio: 1640 / 2360;
+}
+
+.lo-device--watch {
+  padding: 0.5rem;
+  border-radius: 2.2rem;
+}
+
+.lo-device--watch .lo-device__screen {
+  border-radius: 1.75rem;
+  aspect-ratio: 416 / 496;
+  background: #000;
+}
+
+.lo-device--watch .lo-device__screen img {
+  object-position: center;
+}
+
+/* ---------- iPad / Apple Watch セクション ---------- */
+
+.lo-multi {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 2.5rem);
+  align-items: center;
+}
+
+.lo-multi__copy .lo-h2 {
+  margin-bottom: 0.75rem;
+}
+
+.lo-multi__copy p {
+  margin: 0 0 1rem;
+  line-height: 1.85;
+  color: var(--color-muted);
+}
+
+.lo-multi__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.9375rem;
+}
+
+.lo-multi__list li {
+  padding-left: 1.25rem;
+  position: relative;
+}
+
+.lo-multi__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+.lo-multi__shots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(0.875rem, 3vw, 1.5rem);
+  justify-content: center;
+  align-items: flex-start;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lo-multi__shots .lo-shot {
+  margin: 0;
+  text-align: center;
+}
+
+.lo-multi__shots figcaption {
+  margin-top: 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--color-muted);
+}
+
+.lo-multi__shots--ipad .lo-device {
+  width: min(250px, 42vw);
+}
+
+.lo-multi__shots--watch .lo-device {
+  width: min(150px, 40vw);
+}
+
+@media (min-width: 900px) {
+  .lo-multi {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+
+  .lo-multi--reverse .lo-multi__copy {
+    order: 2;
+  }
+}
+
 /* ---------- ギャラリー ---------- */
 
 .lo-gallery {
