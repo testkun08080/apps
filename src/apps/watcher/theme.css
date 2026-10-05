@@ -133,6 +133,12 @@
   color: var(--color-accent);
 }
 
+/* ナビ内リンクの文字色がボタンの白文字を上書きしないようにする */
+.wt-nav__links a.wt-btn--primary,
+.wt-nav__links a.wt-btn--primary:hover {
+  color: #fff;
+}
+
 /* 狭い画面では法務リンクを畳み、フッターの導線に任せます */
 .wt-nav__links a:not(:last-child) {
   display: none;
