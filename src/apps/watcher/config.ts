@@ -15,8 +15,8 @@ export const app: AppConfig = {
   },
   supportEmail: 'support-app+watcher@testkun.net',
   icon,
-  appStoreUrl: 'https://apps.apple.com/us/app/id6772545052',
-  version: '1.0.0',
+  appStoreUrl: 'https://apps.apple.com/jp/app/id6772545052',
+  version: '1.2.0',
   theme: {
     bg: '#f8fafc',
     surface: '#ffffff',
