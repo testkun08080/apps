@@ -1,0 +1,707 @@
+---
+/**
+ * レシートの読み取り・表示ページ（/life-office/r/）。
+ *
+ * - アプリの QR を読むと `/life-office/r/#1.<payload>` が開き、レシート全項目を表示する。
+ * - フラグメントが無ければ、カメラ / 画像 / テキストから QR・CODE128 を読み取る。
+ * 内容は URL フラグメントにだけ載り、読み取りもブラウザ内で完結する（サーバーへ送らない）。
+ */
+import { Image } from 'astro:assets';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import LanguageSwitcher from '@/components/LanguageSwitcher.astro';
+import { site } from '@/config/site';
+import { getSupportEmail } from '@/apps';
+import { defaultLocale } from '@/config/i18n';
+import { localizePath, localizedApp, t } from '@/i18n';
+import type { AppConfig } from '@/apps/types';
+import type { Locale } from '@/config/i18n';
+import Icon from '../components/Icon.astro';
+import '../theme.css';
+
+import icon from '@/assets/life-office/icon.png';
+
+interface Props {
+  app: AppConfig;
+  locale?: Locale;
+}
+
+const { app: rawApp, locale = defaultLocale } = Astro.props;
+const app = localizedApp(rawApp, locale);
+const supportEmail = getSupportEmail(rawApp);
+const year = new Date().getFullYear();
+
+const copy = {
+  ja: {
+    title: 'レシートを読み込む',
+    skip: '本文へスキップ',
+    eyebrow: 'レシート',
+    heading: 'レシートを読み込む。',
+    sub: 'LIFE OFFICE のレシートの QR コードかバーコードを読み取ると、内容をここに表示します。',
+    privacy: '読み取りはこのブラウザの中だけで行い、内容をサーバーへ送信しません。',
+    camera: 'カメラで読み取る',
+    stopCamera: 'カメラを止める',
+    upload: '画像から読み取る',
+    pasteLabel: 'コードの文字列や URL を貼り付ける',
+    pastePlaceholder: '20260707090512 / https://apps.testkun.net/life-office/r/#1.…',
+    pasteSubmit: '表示する',
+    scanning: 'コードをカメラに向けてください…',
+    loading: '読み取りの準備をしています…',
+    receiptHeading: 'レシート',
+    again: '別のコードを読み込む',
+    print: '印刷する',
+    simpleNote:
+      'バーコードからは年月日時刻と名前だけを復元しています。メモや退勤時刻まで表示するには、アプリの設定で QR を選んでください。',
+    errors: {
+      empty: 'コードが空です。',
+      invalid: 'LIFE OFFICE のレシートとして読み取れませんでした。',
+      version: 'このレシートは新しい形式です。ページを再読み込みしてください。',
+      foreignUrl: 'LIFE OFFICE のレシート以外の URL は開きません。',
+      notFound: '画像の中にコードが見つかりませんでした。明るく、正面から写した画像でお試しください。',
+      camera: 'カメラを使えませんでした。ブラウザのカメラ許可を確認するか、画像から読み取ってください。',
+      engine: '読み取り機能を読み込めませんでした。通信環境を確認して再度お試しください。',
+    },
+    labels: {
+      typeIn: '— 出勤 —',
+      typeOut: '— 退勤 —',
+      typeSimple: '— RECEIPT —',
+      timeIn: '出勤',
+      timeInOnOut: '出勤',
+      timeOut: '退勤',
+      time: 'TIME',
+    },
+    home: 'ホーム',
+    appPage: 'アプリページ',
+    footerNav: 'フッター',
+    storeCtaSuffix: ' で入手',
+  },
+  en: {
+    title: 'Read a receipt',
+    skip: 'Skip to content',
+    eyebrow: 'Receipt',
+    heading: 'Read a receipt.',
+    sub: 'Scan the QR code or barcode on a LIFE OFFICE receipt to see its details here.',
+    privacy: 'Scanning happens entirely in this browser. Nothing is sent to a server.',
+    camera: 'Scan with camera',
+    stopCamera: 'Stop camera',
+    upload: 'Read from an image',
+    pasteLabel: 'Or paste the code text or URL',
+    pastePlaceholder: '20260707090512 / https://apps.testkun.net/en/life-office/r/#1.…',
+    pasteSubmit: 'Show',
+    scanning: 'Point the camera at the code…',
+    loading: 'Getting the scanner ready…',
+    receiptHeading: 'Receipt',
+    again: 'Read another code',
+    print: 'Print',
+    simpleNote:
+      'A barcode only carries the date, time and name. To include memos and clock-out times, choose QR in the app settings.',
+    errors: {
+      empty: 'The code is empty.',
+      invalid: 'This does not look like a LIFE OFFICE receipt.',
+      version: 'This receipt uses a newer format. Please reload the page.',
+      foreignUrl: 'Links other than LIFE OFFICE receipts are not opened.',
+      notFound: 'No code was found in the image. Try a brighter photo taken straight on.',
+      camera: 'The camera is not available. Check the browser permission, or read from an image instead.',
+      engine: 'The scanner could not be loaded. Check your connection and try again.',
+    },
+    labels: {
+      typeIn: '— CLOCK IN —',
+      typeOut: '— CLOCK OUT —',
+      typeSimple: '— RECEIPT —',
+      timeIn: 'TIME',
+      timeInOnOut: 'IN',
+      timeOut: 'OUT',
+      time: 'TIME',
+    },
+    home: 'Home',
+    appPage: 'App page',
+    footerNav: 'Footer',
+    storeCtaSuffix: ' — Get',
+  },
+} satisfies Record<Locale, unknown>;
+
+const c = copy[locale];
+const landingPath = localizePath(`${app.slug}/`, locale);
+const clientCopy = JSON.stringify({ locale, errors: c.errors, labels: c.labels, scanning: c.scanning, loading: c.loading, camera: c.camera, stopCamera: c.stopCamera });
+---
+
+<BaseLayout
+  title={c.title}
+  app={rawApp}
+  locale={locale}
+  description={`${app.name} — ${c.sub}`}
+  ogImage={icon.src}
+  noindex
+  allowWasm
+  disableAnalytics
+>
+  <a class="lo-skip" href="#lo-main">{c.skip}</a>
+
+  <header class="lo-nav">
+    <div class="lo-nav__inner">
+      <a class="lo-nav__brand" href={landingPath}>
+        <Image src={icon} alt="" width={32} height={32} loading="eager" />
+        <span>{app.name}</span>
+      </a>
+      {
+        app.appStoreUrl && (
+          <a class="lo-btn lo-btn--primary lo-btn--sm" href={app.appStoreUrl} rel="noopener">
+            <Icon name="apple" />
+            <span>App Store<span class="lo-nav__cta-suffix">{c.storeCtaSuffix}</span></span>
+          </a>
+        )
+      }
+    </div>
+  </header>
+
+  <main id="lo-main" data-receipt-root data-copy={clientCopy}>
+    <section class="lo-band lo-band--surface lo-rcpt-band">
+      <div class="lo-band__inner">
+        <!-- 表示: フラグメントがあるとき -->
+        <div class="lo-rcpt-view" data-view="receipt" hidden>
+          <h1 class="lo-sr">{c.receiptHeading}</h1>
+          <div class="lo-rcpt" data-receipt>
+            <div class="lo-rcpt__card">
+              <p class="lo-rcpt__brand">LIFE OFFICE</p>
+              <p class="lo-rcpt__type" data-field="type"></p>
+              <hr class="lo-rcpt__rule" />
+              <dl class="lo-rcpt__rows" data-field="rows"></dl>
+              <hr class="lo-rcpt__rule" data-field="rule2" />
+              <p class="lo-rcpt__message" data-field="message"></p>
+              <p class="lo-rcpt__code" data-field="code"></p>
+            </div>
+            <div class="lo-rcpt__zigzag" aria-hidden="true"></div>
+          </div>
+          <p class="lo-note lo-rcpt-simple" data-field="simple" hidden>{c.simpleNote}</p>
+          <div class="lo-rcpt-actions">
+            <button type="button" class="lo-btn lo-btn--primary" data-action="again">
+              <Icon name="search" />
+              <span>{c.again}</span>
+            </button>
+            <button type="button" class="lo-btn lo-btn--link" data-action="print">
+              <Icon name="receipt" />
+              <span>{c.print}</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 読み取り: フラグメントが無いとき -->
+        <div class="lo-rcpt-reader" data-view="reader">
+          <div class="lo-head">
+            <p class="lo-eyebrow">{c.eyebrow}</p>
+            <h1 class="lo-h2">{c.heading}</h1>
+            <p class="lo-sub">{c.sub}</p>
+          </div>
+
+          <p class="lo-rcpt-error" role="alert" data-field="error" hidden></p>
+
+          <div class="lo-rcpt-buttons">
+            <button type="button" class="lo-btn lo-btn--primary" data-action="camera">
+              <Icon name="camera" />
+              <span data-field="camera-label">{c.camera}</span>
+            </button>
+            <label class="lo-btn lo-rcpt-upload">
+              <Icon name="image" />
+              <span>{c.upload}</span>
+              <input type="file" accept="image/*" class="lo-sr" data-action="upload" />
+            </label>
+          </div>
+
+          <div class="lo-rcpt-camera" data-field="camera" hidden>
+            <video playsinline muted data-field="video"></video>
+            <p class="lo-note" data-field="status" aria-live="polite"></p>
+          </div>
+
+          <form class="lo-rcpt-paste" data-action="paste">
+            <label for="lo-rcpt-text">{c.pasteLabel}</label>
+            <div class="lo-rcpt-paste__row">
+              <input
+                id="lo-rcpt-text"
+                type="text"
+                inputmode="url"
+                autocomplete="off"
+                autocapitalize="off"
+                spellcheck="false"
+                placeholder={c.pastePlaceholder}
+              />
+              <button type="submit" class="lo-btn lo-btn--sm lo-btn--primary">{c.pasteSubmit}</button>
+            </div>
+          </form>
+
+          <p class="lo-note lo-note--fine">{c.privacy}</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="lo-footer">
+    <div class="lo-footer__inner">
+      <p class="lo-footer__brand">{app.name}</p>
+      <nav class="lo-footer__links" aria-label={c.footerNav}>
+        <a href={localizePath('', locale)}>{c.home}</a>
+        <a href={landingPath}>{c.appPage}</a>
+        <a href={localizePath(`${app.slug}/support/`, locale)}>{t(locale, 'nav.support')}</a>
+        <a href={localizePath(`${app.slug}/privacy/`, locale)}>{t(locale, 'nav.privacy')}</a>
+        <a href={localizePath(`${app.slug}/terms/`, locale)}>{t(locale, 'nav.terms')}</a>
+        <a href={`mailto:${supportEmail}`}>{supportEmail}</a>
+      </nav>
+      <LanguageSwitcher locale={locale} />
+      <p class="lo-footer__meta">&copy; {year} {site.operatorName}</p>
+    </div>
+  </footer>
+</BaseLayout>
+
+<script>
+  import {
+    formatDuration,
+    parseReceiptFragment,
+    parseScannedValue,
+    type ParseResult,
+    type ReceiptView,
+  } from '../lib/receiptLink';
+
+  type Copy = {
+    locale: 'ja' | 'en';
+    errors: Record<string, string>;
+    labels: Record<string, string>;
+    scanning: string;
+    loading: string;
+    camera: string;
+    stopCamera: string;
+  };
+
+  type Detector = { detect(source: ImageBitmapSource): Promise<{ rawValue: string }[]> };
+
+  const root = document.querySelector<HTMLElement>('[data-receipt-root]')!;
+  const copy = JSON.parse(root.dataset.copy ?? '{}') as Copy;
+  const $ = <T extends Element = HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
+
+  const receiptView = $('[data-view="receipt"]');
+  const readerView = $('[data-view="reader"]');
+  const errorEl = $('[data-field="error"]');
+  const cameraBox = $('[data-field="camera"]');
+  const video = $<HTMLVideoElement>('[data-field="video"]');
+  const statusEl = $('[data-field="status"]');
+  const cameraLabel = $('[data-field="camera-label"]');
+
+  // --- レシート描画（textContent のみを使い、読み取った値を HTML として解釈しない） ---
+
+  const row = (label: string, value: string): DocumentFragment => {
+    const frag = document.createDocumentFragment();
+    const dt = document.createElement('dt');
+    dt.textContent = label;
+    const dd = document.createElement('dd');
+    dd.textContent = value;
+    frag.append(dt, dd);
+    return frag;
+  };
+
+  const renderReceipt = (r: ReceiptView) => {
+    const L = copy.labels;
+    $('[data-field="type"]').textContent =
+      r.kind === 'out' ? L.typeOut : r.kind === 'in' ? L.typeIn : L.typeSimple;
+
+    const rows = $('[data-field="rows"]');
+    rows.replaceChildren();
+    if (r.name) rows.append(row('NAME', r.name));
+    if (r.date) rows.append(row('DATE', r.date));
+    if (r.timeIn) {
+      const label = r.simple ? L.time : r.kind === 'out' ? L.timeInOnOut : L.timeIn;
+      rows.append(row(label, r.timeIn));
+    }
+    if (r.timeOut) rows.append(row(L.timeOut, r.outNextDay ? `${r.timeOut} (+1)` : r.timeOut));
+    if (r.workMinutes != null) rows.append(row('WORK', formatDuration(r.workMinutes, copy.locale)));
+
+    const message = $('[data-field="message"]');
+    message.textContent = r.message ?? '';
+    message.hidden = !r.message;
+    $('[data-field="code"]').textContent = r.code ?? '';
+    $('[data-field="simple"]').hidden = !r.simple;
+
+    readerView.hidden = true;
+    receiptView.hidden = false;
+    window.scrollTo({ top: 0 });
+  };
+
+  const showReader = (error?: string) => {
+    receiptView.hidden = true;
+    readerView.hidden = false;
+    errorEl.textContent = error ?? '';
+    errorEl.hidden = !error;
+  };
+
+  const errorText = (result: Extract<ParseResult, { status: 'error' }>) =>
+    copy.errors[result.reason] ?? copy.errors.invalid;
+
+  /** 読み取った値を表示。QR の URL ならアドレスバーも共有できる形にそろえる。 */
+  const handleValue = (value: string) => {
+    const result = parseScannedValue(value);
+    if (result.status === 'error') {
+      showReader(errorText(result));
+      return;
+    }
+    stopCamera();
+    const hash = value.trim().match(/#?(\d+\.[A-Za-z0-9_-]+)$/)?.[1];
+    if (!result.receipt.simple && hash) {
+      history.replaceState(null, '', `#${hash}`);
+    }
+    renderReceipt(result.receipt);
+  };
+
+  const renderFromHash = () => {
+    if (location.hash.length <= 1) {
+      showReader();
+      return;
+    }
+    const result = parseReceiptFragment(location.hash);
+    if (result.status === 'ok') renderReceipt(result.receipt);
+    else showReader(errorText(result));
+  };
+
+  // --- 読み取りエンジン（zxing-wasm、初回利用時に読み込む） ---
+
+  let detectorPromise: Promise<Detector> | null = null;
+  const getDetector = (): Promise<Detector> => {
+    detectorPromise ??= (async () => {
+      const [{ BarcodeDetector, prepareZXingModule }, { default: wasmUrl }] = await Promise.all([
+        import('barcode-detector/ponyfill'),
+        import('zxing-wasm/reader/zxing_reader.wasm?url'),
+      ]);
+      // CDN ではなく同一オリジンから .wasm を読む（CSP と外部依存を避ける）
+      prepareZXingModule({
+        overrides: {
+          locateFile: (path: string, prefix: string) => (path.endsWith('.wasm') ? wasmUrl : prefix + path),
+        },
+      });
+      return new BarcodeDetector({ formats: ['qr_code', 'code_128'] }) as Detector;
+    })();
+    detectorPromise.catch(() => {
+      detectorPromise = null;
+    });
+    return detectorPromise;
+  };
+
+  // --- カメラ ---
+
+  let stream: MediaStream | null = null;
+  let scanTimer: number | undefined;
+
+  function stopCamera() {
+    window.clearTimeout(scanTimer);
+    stream?.getTracks().forEach((track) => track.stop());
+    stream = null;
+    video.srcObject = null;
+    cameraBox.hidden = true;
+    cameraLabel.textContent = copy.camera;
+  }
+
+  const startCamera = async () => {
+    showReader();
+    cameraBox.hidden = false;
+    statusEl.textContent = copy.loading;
+    let detector: Detector;
+    try {
+      detector = await getDetector();
+    } catch {
+      stopCamera();
+      showReader(copy.errors.engine);
+      return;
+    }
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment' },
+        audio: false,
+      });
+    } catch {
+      stopCamera();
+      showReader(copy.errors.camera);
+      return;
+    }
+    video.srcObject = stream;
+    await video.play().catch(() => undefined);
+    cameraLabel.textContent = copy.stopCamera;
+    statusEl.textContent = copy.scanning;
+
+    const tick = async () => {
+      if (!stream) return;
+      if (video.readyState >= 2) {
+        try {
+          const codes = await detector.detect(video);
+          const hit = codes.find((code) => parseScannedValue(code.rawValue).status === 'ok') ?? codes[0];
+          if (hit) {
+            handleValue(hit.rawValue);
+            if (!stream) return;
+          }
+        } catch {
+          // フレーム単位の失敗は無視して次へ
+        }
+      }
+      scanTimer = window.setTimeout(tick, 250);
+    };
+    void tick();
+  };
+
+  // --- 画像 ---
+
+  const readImage = async (file: File) => {
+    showReader();
+    stopCamera();
+    let detector: Detector;
+    try {
+      detector = await getDetector();
+    } catch {
+      showReader(copy.errors.engine);
+      return;
+    }
+    try {
+      const codes = await detector.detect(file);
+      const hit = codes.find((code) => parseScannedValue(code.rawValue).status === 'ok') ?? codes[0];
+      if (hit) handleValue(hit.rawValue);
+      else showReader(copy.errors.notFound);
+    } catch {
+      showReader(copy.errors.notFound);
+    }
+  };
+
+  // --- イベント ---
+
+  $('[data-action="camera"]').addEventListener('click', () => {
+    if (stream) stopCamera();
+    else void startCamera();
+  });
+
+  const upload = $<HTMLInputElement>('[data-action="upload"]');
+  upload.addEventListener('change', () => {
+    const file = upload.files?.[0];
+    upload.value = '';
+    if (file) void readImage(file);
+  });
+
+  $<HTMLFormElement>('[data-action="paste"]').addEventListener('submit', (event) => {
+    event.preventDefault();
+    const input = $<HTMLInputElement>('#lo-rcpt-text');
+    handleValue(input.value);
+  });
+
+  $('[data-action="again"]').addEventListener('click', () => {
+    history.replaceState(null, '', location.pathname + location.search);
+    showReader();
+  });
+
+  $('[data-action="print"]').addEventListener('click', () => window.print());
+
+  window.addEventListener('hashchange', renderFromHash);
+  window.addEventListener('pagehide', stopCamera);
+  renderFromHash();
+</script>
+
+<style>
+  [data-receipt-root] [hidden] {
+    display: none !important;
+  }
+
+  .lo-rcpt-band {
+    min-height: 70vh;
+  }
+
+  .lo-rcpt-reader,
+  .lo-rcpt-view {
+    max-width: 32rem;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  .lo-rcpt-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+
+  .lo-rcpt-buttons .lo-btn {
+    flex: 1 1 13rem;
+    cursor: pointer;
+  }
+
+  .lo-rcpt-upload {
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    background: var(--color-surface);
+  }
+
+  .lo-rcpt-upload:focus-within {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .lo-rcpt-error {
+    margin: 0;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    background: color-mix(in srgb, #c0392b 10%, var(--color-surface));
+    color: var(--color-text);
+    border: 1px solid color-mix(in srgb, #c0392b 35%, transparent);
+  }
+
+  .lo-rcpt-camera {
+    display: grid;
+    gap: 0.5rem;
+    justify-items: center;
+  }
+
+  .lo-rcpt-camera video {
+    width: 100%;
+    max-height: 60vh;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border-radius: var(--lo-radius);
+    background: #000;
+  }
+
+  .lo-rcpt-paste {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    color: var(--color-muted);
+  }
+
+  .lo-rcpt-paste__row {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .lo-rcpt-paste input {
+    flex: 1;
+    min-width: 0;
+    min-height: 2.5rem;
+    padding: 0.5rem 0.875rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font: inherit;
+    font-size: 1rem;
+  }
+
+  button.lo-btn {
+    border: 0;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* ---------- レシート（アプリの ReceiptCard と同じ意匠） ---------- */
+
+  .lo-rcpt {
+    --rcpt-bg: #fdfaf4;
+    width: 100%;
+    max-width: 20rem;
+    margin: 0 auto;
+    font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    filter: drop-shadow(0 4px 12px rgb(0 0 0 / 12%));
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .lo-rcpt {
+      --rcpt-bg: #222420;
+    }
+  }
+
+  .lo-rcpt__card {
+    background: var(--rcpt-bg);
+    padding: 2rem 1.5rem 1.5rem;
+    border-radius: 0.375rem 0.375rem 0 0;
+    color: var(--color-text);
+    font-size: 0.875rem;
+    line-height: 1.35;
+  }
+
+  .lo-rcpt__brand {
+    margin: 0;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+  }
+
+  .lo-rcpt__type {
+    margin: 0.25rem 0 0;
+    text-align: center;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    color: var(--color-muted);
+  }
+
+  .lo-rcpt__rule {
+    border: 0;
+    border-bottom: 1px dashed var(--color-border);
+    margin: 1rem 0;
+  }
+
+  .lo-rcpt__rows {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.5rem 1rem;
+    margin: 0;
+  }
+
+  .lo-rcpt__rows :global(dt) {
+    color: var(--color-muted);
+  }
+
+  .lo-rcpt__rows :global(dd) {
+    margin: 0;
+    text-align: right;
+    overflow-wrap: anywhere;
+  }
+
+  .lo-rcpt__message {
+    margin: 0.5rem 0;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  .lo-rcpt__code {
+    margin: 1.5rem 0 0;
+    font-size: 0.625rem;
+    letter-spacing: 1.4px;
+    color: var(--color-muted);
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  .lo-rcpt__zigzag {
+    height: 0.75rem;
+    background:
+      linear-gradient(-45deg, transparent 0.5rem, var(--rcpt-bg) 0) 0 0 / 1rem 100% repeat-x,
+      linear-gradient(45deg, transparent 0.5rem, var(--rcpt-bg) 0) 0 0 / 1rem 100% repeat-x;
+  }
+
+  .lo-rcpt-simple {
+    text-align: center;
+    margin: 0;
+  }
+
+  .lo-rcpt-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+
+  @media print {
+    :global(.lo-nav),
+    :global(.lo-footer),
+    .lo-rcpt-actions,
+    .lo-rcpt-simple {
+      display: none !important;
+    }
+
+    .lo-rcpt {
+      filter: none;
+    }
+  }
+</style>

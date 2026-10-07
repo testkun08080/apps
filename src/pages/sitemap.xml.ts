@@ -11,8 +11,12 @@ function extraPagesForApp(slug: string): string[] {
   const prefix = `/src/apps/${slug}/pages/`;
   return Object.keys(extraPageModules)
     .filter((key) => key.startsWith(prefix))
-    .map((key) => key.slice(prefix.length).replace(/\.astro$/, ''));
+    .map((key) => key.slice(prefix.length).replace(/\.astro$/, ''))
+    .filter((page) => !excludedExtraPages.has(page));
 }
+
+/** noindex の追加ページ（個人のレシート URL を受けるページなど） */
+const excludedExtraPages = new Set(['r']);
 
 const legalDocTypes = ['privacy', 'terms', 'support'] as const;
 
