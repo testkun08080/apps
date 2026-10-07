@@ -20,9 +20,15 @@ interface Props {
   schemaCategory?: string;
   /** true のとき、かつ app.appStoreUrl があるとき、SoftwareApplication の構造化データを出力する */
   isAppHome?: boolean;
+  /** true のとき検索エンジンに載せない（個人データを URL に含むページ向け） */
+  noindex?: boolean;
+  /** true のとき WebAssembly の実行を許可する（ブラウザ内バーコード読み取り用） */
+  allowWasm?: boolean;
+  /** true のとき GA を読み込まない（page_location に URL フラグメントの個人データが載るページ向け） */
+  disableAnalytics?: boolean;
 }
 
-const { title, app, locale = defaultLocale, description, ogImage, schemaCategory, isAppHome } = Astro.props;
+const { title, app, locale = defaultLocale, description, ogImage, schemaCategory, isAppHome, noindex, allowWasm, disableAnalytics } = Astro.props;
 const appName = app ? resolveLocalized(app.name, locale) : undefined;
 const pageTitle = app && title !== appName ? `${title} — ${appName}` : title;
 const pageDescription =
@@ -34,12 +40,12 @@ const themeCss = app ? themeToCss(app.slug, app.theme, app.darkTheme) : undefine
 const alternateUrls = getAlternateUrls(Astro.url.pathname, locale);
 const pageAnalytics = parsePageAnalytics(Astro.url.pathname, app?.slug);
 const gaId = site.googleAnalyticsId;
-const enableGa = import.meta.env.PROD && gaId.length > 0;
+const enableGa = import.meta.env.PROD && gaId.length > 0 && !disableAnalytics;
 
 // GitHub Pages ではレスポンスヘッダを設定できないため、<meta> で CSP を付与する。
 // （frame-ancestors / report-uri / sandbox は meta では無効）
 const gaHosts = ['https://www.googletagmanager.com', 'https://*.google-analytics.com', 'https://*.analytics.google.com'];
-const scriptSrc = ["'self'", ...(enableGa ? [cspHash(buildGaConfigScript(gaId, pageAnalytics)), gaHosts[0]] : [])];
+const scriptSrc = ["'self'", ...(allowWasm ? ["'wasm-unsafe-eval'"] : []), ...(enableGa ? [cspHash(buildGaConfigScript(gaId, pageAnalytics)), gaHosts[0]] : [])];
 const csp = [
   "default-src 'self'",
   `script-src ${scriptSrc.join(' ')}`,
@@ -85,6 +91,7 @@ const softwareAppJsonLd =
     <meta http-equiv="Content-Security-Policy" content={csp} />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="description" content={pageDescription} />
+    {noindex && <meta name="robots" content="noindex" />}
     <title>{pageTitle}</title>
 
     <link rel="canonical" href={canonical} />
