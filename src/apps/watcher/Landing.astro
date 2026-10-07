@@ -110,8 +110,8 @@ const features = [
   },
   {
     icon: 'export',
-    title: 'レポート書き出し',
-    body: 'Markdown / PDF で手元に残せます（Pro）。',
+    title: '共有・書き出し',
+    body: 'テキスト / 画像で共有、PDF で書き出し。すべてのプランで使えます。',
   },
   {
     icon: 'mail',
@@ -157,8 +157,8 @@ const plans = [
     featured: false,
     price: '¥0',
     unit: 'クレジットカード不要',
-    quota: '「今すぐ調べる」を合計 5 件まで',
-    points: ['まずは手元で試せます', '要点だけの詳しさで調査', 'レポート履歴は各ウォッチの直近 7 件'],
+    quota: '「今すぐ調べる」と定期監視を合わせて生涯 5 件まで',
+    points: ['まずは手元で試せます','ウォッチの追加・定期監視の設定も可能（5 件の枠を消費）', '要点だけの詳しさで調査', 'レポート履歴は各ウォッチの直近 7 件'],
   },
   {
     name: 'Standard',
@@ -181,20 +181,20 @@ const plans = [
     points: [
       'Standard のすべての機能',
       '「いちばん詳しく」まで選べる',
-      'Markdown / PDF 書き出しとメール配信',
+      'メール配信',
     ],
   },
 ];
 
 const comparison = [
-  { label: '定期監視（スケジュール実行）', sample: '—', standard: '○', pro: '○' },
-  { label: 'ウォッチの登録数', sample: '保存のみ', standard: '無制限', pro: '無制限' },
-  { label: 'レポート生成数', sample: '合計 5 件', standard: '月 60 件', pro: '月 120 件' },
+  { label: '定期監視（スケジュール実行）', sample: '5 件の枠内', standard: '○', pro: '○' },
+  { label: 'ウォッチの登録数', sample: '無制限', standard: '無制限', pro: '無制限' },
+  { label: 'レポート生成数', sample: '生涯 5 件', standard: '月 60 件', pro: '月 120 件' },
   { label: 'レポートの詳しさ', sample: '要点だけ', standard: '〜もう少し詳しく', pro: '〜いちばん詳しく' },
   { label: '今すぐ調べる', sample: '1 回 / 日', standard: '3 回 / 日', pro: '5 回 / 日' },
   { label: 'レポート履歴', sample: '直近 7 件', standard: '無制限', pro: '無制限' },
   { label: 'カテゴリ', sample: '—', standard: '○', pro: '○' },
-  { label: 'Markdown / PDF 書き出し', sample: '—', standard: '—', pro: '○' },
+  { label: '共有・書き出し（テキスト / 画像 / PDF）', sample: '○', standard: '○', pro: '○' },
   { label: 'メール配信', sample: '—', standard: '—', pro: '○' },
   { label: '広告', sample: 'なし', standard: 'なし', pro: 'なし' },
 ];
@@ -456,8 +456,8 @@ const description =
         </ul>
 
         <div class="wt-callout">
-          <h3>10 日間の無料トライアル</h3>
-          <p>定期監視は Standard または Pro でご利用いただけます。どちらかを選んで 10 日間の無料トライアルを開始できます（お支払い方法の登録が必要です）。終了前に通知が届き、それまでにキャンセルすれば料金は発生しません。トライアル期間中に生成できるレポートは、期間に応じた件数（Standard 20 件 / Pro 40 件）です。</p>
+          <h3>無料トライアル（月額 1 週間 / 年額 1 か月）</h3>
+          <p>お試しの 5 件を使い切った後も続けるには、Standard または Pro を選んで、月額プランは 1 週間、年額プランは 1 か月の無料トライアルを開始できます（お支払い方法の登録が必要です）。終了前に通知が届き、それまでにキャンセルすれば料金は発生しません。月額トライアル中に生成できるレポートは月 14 件（Standard）/ 28 件（Pro）、年額トライアルは通常プランと同じ件数です。</p>
         </div>
 
         <div class="wt-table-wrap">

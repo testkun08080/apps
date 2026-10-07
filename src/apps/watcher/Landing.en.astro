@@ -110,8 +110,8 @@ const features = [
   },
   {
     icon: 'export',
-    title: 'Export reports',
-    body: 'Keep a copy as Markdown or PDF (Pro).',
+    title: 'Share and export',
+    body: 'Share as text or image, or export to PDF. Available on every plan.',
   },
   {
     icon: 'mail',
@@ -157,8 +157,8 @@ const plans = [
     featured: false,
     price: '¥0',
     unit: 'No credit card required',
-    quota: 'Up to 5 total "research on demand" runs',
-    points: ['Try it out right away', 'Research at the "key points only" level', 'Report history: the last 7 reports per watch'],
+    quota: 'Up to 5 lifetime runs, counting "research on demand" and scheduled runs together',
+    points: ['Try it out right away', 'You can add watches and schedule them too (each run uses one of the 5)', 'Research at the "key points only" level', 'Report history: the last 7 reports per watch'],
   },
   {
     name: 'Standard',
@@ -181,20 +181,20 @@ const plans = [
     points: [
       'Everything in Standard',
       'Access to the "deepest detail" level',
-      'Markdown / PDF export and email delivery',
+      'Email delivery',
     ],
   },
 ];
 
 const comparison = [
-  { label: 'Scheduled watching', sample: '—', standard: '○', pro: '○' },
-  { label: 'Number of watches', sample: 'Save only', standard: 'Unlimited', pro: 'Unlimited' },
-  { label: 'Reports generated', sample: '5 total', standard: '60 / month', pro: '120 / month' },
+  { label: 'Scheduled watching', sample: 'Within the 5 runs', standard: '○', pro: '○' },
+  { label: 'Number of watches', sample: 'Unlimited', standard: 'Unlimited', pro: 'Unlimited' },
+  { label: 'Reports generated', sample: '5 lifetime', standard: '60 / month', pro: '120 / month' },
   { label: 'Report detail', sample: 'Key points only', standard: 'Up to a bit more detail', pro: 'Up to the deepest detail' },
   { label: 'Research on demand', sample: '1 / day', standard: '3 / day', pro: '5 / day' },
   { label: 'Report history', sample: 'Last 7', standard: 'Unlimited', pro: 'Unlimited' },
   { label: 'Categories', sample: '—', standard: '○', pro: '○' },
-  { label: 'Markdown / PDF export', sample: '—', standard: '—', pro: '○' },
+  { label: 'Share and export (text / image / PDF)', sample: '○', standard: '○', pro: '○' },
   { label: 'Email delivery', sample: '—', standard: '—', pro: '○' },
   { label: 'Ads', sample: 'None', standard: 'None', pro: 'None' },
 ];
@@ -456,8 +456,8 @@ const description =
         </ul>
 
         <div class="wt-callout">
-          <h3>10-day free trial</h3>
-          <p>Scheduled watching is available on Standard or Pro. Pick either one to start a 10-day free trial (a payment method is required). You’ll be notified before it ends, and canceling before then means you won’t be charged. During the trial you can generate a set number of reports based on the trial length (20 for Standard / 40 for Pro).</p>
+          <h3>Free trial (1 week monthly / 1 month annual)</h3>
+          <p>To keep going after your 5 trial runs, pick Standard or Pro to start a free trial: 1 week on monthly plans, 1 month on annual plans (a payment method is required). You’ll be notified before it ends, and canceling before then means you won’t be charged. During a monthly trial you can generate 14 reports (Standard) / 28 (Pro) per month; annual trials get the same allowance as the regular plan.</p>
         </div>
 
         <div class="wt-table-wrap">
