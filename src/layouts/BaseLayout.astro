@@ -4,7 +4,9 @@ import type { AppConfig } from '@/apps/types';
 import { themeToCss } from '@/lib/theme';
 import { site } from '@/config/site';
 import { defaultLocale, type Locale } from '@/config/i18n';
-import { getAlternateUrls, resolveLocalized } from '@/i18n';
+import { getAlternateUrls, resolveLocalized, t } from '@/i18n';
+import { getOgImagePath } from '@/apps';
+import { OG_HEIGHT, OG_WIDTH } from '@/lib/og-size';
 import { buildGaConfigScript, cspHash, parsePageAnalytics } from '@/lib/analytics';
 import { jsonForInlineScript } from '@/lib/json';
 import GoogleAnalytics from '@/components/GoogleAnalytics.astro';
@@ -14,7 +16,7 @@ interface Props {
   app?: AppConfig;
   locale?: Locale;
   description?: string;
-  /** OGP 画像の URL（省略時はアプリアイコン／サイト既定） */
+  /** OGP 画像の URL（省略時はアプリごとに生成した /og/<locale>/<slug>.png、アプリ外はアプリ一覧用） */
   ogImage?: string;
   /** schema.org SoftwareApplication の applicationCategory（省略時は ProductivityApplication） */
   schemaCategory?: string;
@@ -35,7 +37,8 @@ const pageDescription =
   description ?? (appName ? `${appName} — ${title}` : title);
 const base = import.meta.env.BASE_URL;
 const canonical = new URL(Astro.url.pathname, site.publicBaseUrl).href;
-const ogImageUrl = ogImage ? new URL(ogImage, site.publicBaseUrl).href : undefined;
+const ogImageUrl = new URL(ogImage ?? getOgImagePath(app?.slug ?? 'index', locale), site.publicBaseUrl).href;
+const ogImageAlt = appName ? t(locale, 'og.imageAlt', appName) : t(locale, 'og.hubTitle');
 const themeCss = app ? themeToCss(app.slug, app.theme, app.darkTheme) : undefined;
 const alternateUrls = getAlternateUrls(Astro.url.pathname, locale);
 const pageAnalytics = parsePageAnalytics(Astro.url.pathname, app?.slug);
@@ -70,7 +73,7 @@ const softwareAppJsonLd =
         operatingSystem: 'iOS',
         applicationCategory: schemaCategory ?? 'ProductivityApplication',
         url: canonical,
-        ...(ogImageUrl ? { image: ogImageUrl } : {}),
+        image: ogImageUrl,
         ...(app.version ? { softwareVersion: app.version } : {}),
         offers: {
           '@type': 'Offer',
@@ -109,9 +112,21 @@ const softwareAppJsonLd =
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
     <meta property="og:url" content={canonical} />
-    <meta name="twitter:card" content={ogImageUrl ? 'summary_large_image' : 'summary'} />
-    {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
-    {ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
+    <meta property="og:locale" content={locale === 'ja' ? 'ja_JP' : 'en_US'} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    {
+      !ogImage && (
+        <>
+          <meta property="og:image:type" content="image/png" />
+          <meta property="og:image:width" content={String(OG_WIDTH)} />
+          <meta property="og:image:height" content={String(OG_HEIGHT)} />
+        </>
+      )
+    }
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
 
     {softwareAppJsonLd && <script type="application/ld+json" is:inline set:html={softwareAppJsonLd} />}
 

@@ -32,3 +32,8 @@ export function getAppUrl(slug: string, path?: string, locale: Locale = defaultL
   const localized = localizePath(`${slug}${segment}`, locale);
   return new URL(localized, base.endsWith('/') ? base : `${base}/`).href;
 }
+
+/** SNS シェア用 OGP 画像のパス（src/pages/og/[locale]/[slug].png.ts が生成）。`index` はアプリ一覧用 */
+export function getOgImagePath(slug: string, locale: Locale = defaultLocale): string {
+  return `${import.meta.env.BASE_URL}og/${locale}/${slug}.png`;
+}

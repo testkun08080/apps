@@ -1,4 +1,8 @@
 import type { AppConfig } from '@/apps/types';
+import shotEdit1 from '@/assets/shitagaki/edit1.png';
+import shotPreview from '@/assets/shitagaki/preview.png';
+import shotEdit1En from '@/assets/shitagaki/en/edit1.png';
+import shotPreviewEn from '@/assets/shitagaki/en/preview.png';
 import icon from '@/assets/shitagaki/icon.png';
 
 /**
@@ -22,6 +26,16 @@ export const app: AppConfig = {
   // 英語版の公開後もそのまま閲覧者の国のストアへ飛ばせるようにしています。
   appStoreUrl: 'https://apps.apple.com/app/id6774141263',
   version: '1.2.1',
+  og: {
+    headline: {
+      ja: '写真を見ながら\n話すだけで、記事に。',
+      en: 'Just talk while\nyou look, and get\nan article.',
+    },
+    screenshots: {
+      ja: [{ image: shotEdit1 }, { image: shotPreview }],
+      en: [{ image: shotEdit1En }, { image: shotPreviewEn }],
+    },
+  },
   theme: {
     bg: '#FFF7EB',
     surface: '#FFFFFF',

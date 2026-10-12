@@ -28,7 +28,7 @@ if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) {
   process.exit(1);
 }
 
-const reserved = new Set(['support', 'privacy', 'terms', 'index', 'ja', 'en']);
+const reserved = new Set(['support', 'privacy', 'terms', 'index', 'og', 'ja', 'en']);
 if (reserved.has(slug)) {
   console.error(`Error: slug "${slug}" is reserved`);
   process.exit(1);
