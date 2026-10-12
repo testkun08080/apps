@@ -183,6 +183,31 @@ npm run new-app my-app "My App Name" support@example.com
 
 追加の専用ページは `src/apps/<slug>/pages/<name>.astro` を置くと `/<slug>/<name>/` になります（`support` / `privacy` / `terms` は予約済み）。
 
+## SNS シェア画像（OGP）
+
+X / Facebook / LINE / Slack などでリンクを共有したときに出る画像（1200×630）は、ビルド時にアプリごと・言語ごとに自動生成されます（[`src/pages/og/[locale]/[slug].png.ts`](src/pages/og/[locale]/[slug].png.ts)、描画は [`src/lib/og.ts`](src/lib/og.ts)）。
+
+- `/og/ja/<slug>.png`, `/og/en/<slug>.png` … アプリのランディング・法務・追加ページすべてで使用
+- `/og/ja/index.png`, `/og/en/index.png` … アプリ一覧（サイトトップ）で使用
+
+アイコン・テーマ色・tagline だけでも生成されますが、`config.ts` の `og` で仕上がりを調整できます。
+
+```ts
+og: {
+  // 見出し（\n で改行位置を指定。未指定なら tagline を自動で折り返し）
+  headline: { ja: '毎朝の出勤儀式を、\nスマホで。', en: 'Your morning\nclock-in ritual,\non your phone.' },
+  // アプリ名の下の補足（未指定なら「iPhone アプリ」）
+  kicker: { ja: 'iPhone・iPad・Apple Watch', en: 'iPhone, iPad & Apple Watch' },
+  // 右側に並べる端末のスクリーンショット（先頭が手前、最大 2 枚）。{ ja: [...], en: [...] } でロケール別も可
+  // 端末フレーム合成済みの画像は crop で画面部分だけを切り出せます
+  screenshots: [{ image: shotHome }, { image: shotReceipt }],
+  // 装飾・バッジの色（未指定なら theme.accent）
+  brand: '#4f7cff',
+},
+```
+
+確認は `npm run dev` で `http://localhost:4321/og/ja/<slug>.png` を開くのが手軽です。共有済みのリンクは各 SNS が画像をキャッシュするため、差し替え後は [Facebook シェアデバッガー](https://developers.facebook.com/tools/debug/) などで再取得させてください。
+
 ## コマンド
 
 | コマンド | 説明 |

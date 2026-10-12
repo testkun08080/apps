@@ -8,4 +8,4 @@ export const localeLabels: Record<Locale, string> = {
 };
 
 /** Reserved slugs that must not be used as app names (includes locale codes). */
-export const reservedSlugs = new Set<string>([...locales, 'support', 'privacy', 'terms', 'index']);
+export const reservedSlugs = new Set<string>([...locales, 'support', 'privacy', 'terms', 'index', 'og']);

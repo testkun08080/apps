@@ -16,6 +16,27 @@ export type AppTheme = {
   radius?: string;
 };
 
+export type AppOgShot = {
+  image: ImageMetadata;
+  /**
+   * 元画像から切り出す範囲（px）。App Store 用に端末フレームや見出しを合成済みの画像から、
+   * 画面部分だけを使いたいときに指定します。
+   */
+  crop?: { left: number; top: number; width: number; height: number };
+};
+
+/** SNS シェア用 OGP 画像（/og/<locale>/<slug>.png）の内容 */
+export type AppOgConfig = {
+  /** 見出し。`\n` で改行位置を指定できます（未指定時は tagline を自動で折り返し） */
+  headline?: LocalizedString;
+  /** アプリ名の下の補足（未指定時は「iPhone アプリ」） */
+  kicker?: LocalizedString;
+  /** 右側に並べる端末のスクリーンショット（先頭が手前、最大 2 枚）。ロケール別にも指定できます */
+  screenshots?: AppOgShot[] | Partial<Record<Locale, AppOgShot[]>>;
+  /** 装飾・バッジに使う色（未指定時は theme.accent） */
+  brand?: string;
+};
+
 export type AppConfig = {
   slug: string;
   name: LocalizedString;
@@ -31,6 +52,8 @@ export type AppConfig = {
   appStoreUrl?: string;
   /** 配信中のアプリバージョン。指定するとランディングと更新履歴に表示します */
   version?: string;
+  /** OGP 画像のカスタマイズ。未指定でもアイコンとテーマ色から生成します */
+  og?: AppOgConfig;
 };
 
 export type ResolvedAppConfig = Omit<AppConfig, 'name' | 'tagline'> & {
