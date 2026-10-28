@@ -3,7 +3,7 @@ title: Terms of Use
 appSlug: life-office
 docType: terms
 locale: en
-updated: 2026-09-13
+updated: 2026-10-28
 ---
 
 ## 1. Scope
@@ -20,11 +20,12 @@ The App is a personal tool for recording clock-in and clock-out as a daily ritua
 - Pro unlocks the following features:
   - No ads (the banner ads shown on the free plan are removed)
   - Home screen widget
+  - Apple Watch complication (watch face and Smart Stack)
   - Dark theme (and system follow; light remains free)
   - Extended statistics (weekly summaries and heatmap)
   - Note search (full-text, date, and clock-in / clock-out note filters)
   - CSV/PDF export and CSV import
-  - Customizable barcode content on punch receipts (template selection)
+  - Customizable barcode content on punch receipts (template selection) and barcode type (CODE128 / QR)
 - Purchases and refunds are processed **via your Apple ID**. Refunds follow Apple's policies
 - Restore purchases using "Restore Purchases" in the App
 

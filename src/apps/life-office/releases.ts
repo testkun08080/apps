@@ -14,6 +14,29 @@ export type Release = {
  */
 export const releases: Release[] = [
   {
+    version: '1.5.3',
+    // 公開日の記録がないため、1.5.4 へバージョンを上げた日（提出のころ）で仮置きしています。
+    date: '2026-10-12',
+    highlights: {
+      ja: [
+        'ホームで出勤・退勤レシートを重ねて表示し、横スワイプで切り替えられるようにしました',
+        'カード上の時刻をタップして編集でき、勤務時間もカード内に表示します',
+        'レシートのバーコードに QR を追加。読み取ると Web で内容をプレビューできます（Pro）',
+        '月次グラフが長い勤務日は 24 時間スケールに、ヒートマップは色で見やすくなりました',
+        '閉じる操作を × に統一し、打刻スワイプ画面にも × を追加しました',
+        'Apple Watch のコンプリケーション表示と打刻ボタンの文字切れを修正しました',
+      ],
+      en: [
+        'Home now stacks clock-in and clock-out receipts; swipe sideways to switch',
+        'Tap times on the card to edit them; work duration appears on the card',
+        'Receipts can use a QR code; scan it to preview the receipt on the web (Pro)',
+        'Monthly charts scale to 24 hours for long days; the heatmap uses a clearer color scale',
+        'Close actions use a consistent × icon, including on the punch swipe screen',
+        'Fixed Apple Watch complication clipping and punch-toggle label layout',
+      ],
+    },
+  },
+  {
     version: '1.5.2',
     date: '2026-09-30',
     highlights: {

@@ -118,6 +118,11 @@ const features = [
   { icon: 'shake', title: '振り打刻', body: '端末を振って打刻。設定で ON / OFF できます。' },
   { icon: 'clock', title: '後打刻', body: '打ち忘れた記録をあとから追加できます。' },
   {
+    icon: 'clock',
+    title: '時刻のタップ修正',
+    body: 'ホームのカードで出勤・退勤時刻をタップして直せます。勤務時間もカードに表示します。',
+  },
+  {
     icon: 'note',
     title: '出勤前メモ / 退勤コメント',
     body: 'その日の一言を打刻に添えて残せます。',
@@ -125,14 +130,18 @@ const features = [
   {
     icon: 'receipt',
     title: '打刻レシート',
-    body: '記録をレシート風に表示し、写真に保存・共有できます。',
+    body: '記録をレシート風に表示し、写真に保存・共有できます。ホームでは出勤・退勤のレシートが重なり、横スワイプで切り替えられます。',
   },
   {
     icon: 'calendar',
     title: '記録・カレンダー',
     body: '月間の出勤を一覧とカレンダーで確認できます。',
   },
-  { icon: 'chart', title: '月次統計', body: 'その月の出勤を集計して表示します。' },
+  {
+    icon: 'chart',
+    title: '月次統計',
+    body: 'その月の出勤を集計して表示します。長い勤務日がある月は 24 時間スケールで描きます。',
+  },
   { icon: 'bell', title: 'リマインダー', body: '指定時刻に打刻をお知らせします。' },
   {
     icon: 'sync',
@@ -175,7 +184,12 @@ const proFeatures = [
   {
     icon: 'chart',
     title: '拡張統計',
-    body: '曜日ごとの週次集計と、出勤時刻のヒートマップ。',
+    body: '曜日ごとの週次集計と、日ごとの勤務時間を色の濃淡で示すヒートマップ。',
+  },
+  {
+    icon: 'receipt',
+    title: 'レシートのバーコード',
+    body: 'CODE128 か QR を印字。QR を読み取ると、Web で記録の内容を確認できます（データはサーバーへ送られません）。',
   },
   {
     icon: 'search',
@@ -205,7 +219,7 @@ const comparison = [
   { label: '拡張統計（週次・ヒートマップ）', free: false },
   { label: 'メモ検索', free: false },
   { label: 'CSV / PDF エクスポート、CSV インポート', free: false },
-  { label: 'レシートのバーコードの内容', free: false },
+  { label: 'レシートのバーコードの内容（CODE128 / QR）', free: false },
 ];
 
 const privacyPoints = [
@@ -450,7 +464,7 @@ const privacyPoints = [
             />
             <DeviceFrame
               src={shotHeatmap}
-              alt="出勤時刻の傾向を色の濃さで示したヒートマップ画面"
+              alt="日ごとの勤務時間の長さを色の濃さで示したヒートマップ画面"
               caption="ヒートマップ"
             />
           </div>
