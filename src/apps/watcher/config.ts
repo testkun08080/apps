@@ -23,7 +23,7 @@ export const app: AppConfig = {
   supportEmail: 'support-app+watcher@testkun.net',
   icon,
   appStoreUrl: 'https://apps.apple.com/jp/app/id6772545052',
-  version: '1.2.0',
+  version: '1.2.2',
   og: {
     headline: {
       ja: 'あなたの「気になる」を、\nAI が見張って、\nまとめて届ける。',
