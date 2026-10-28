@@ -16,7 +16,7 @@ export const app: AppConfig = {
   supportEmail: 'support-app+life-office@testkun.net',
   icon,
   appStoreUrl: 'https://apps.apple.com/jp/app/id6773638323',
-  version: '1.5.2',
+  version: '1.5.3',
   og: {
     headline: {
       ja: '毎朝の出勤儀式を、\nスマホで。',

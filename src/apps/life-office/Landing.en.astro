@@ -117,6 +117,11 @@ const features = [
   { icon: 'shake', title: 'Shake to punch', body: 'Punch by shaking your device. Toggle ON/OFF in settings.' },
   { icon: 'clock', title: 'Retroactive punch', body: 'Add records you forgot to punch earlier.' },
   {
+    icon: 'clock',
+    title: 'Tap to fix times',
+    body: 'Tap the clock-in or clock-out time on the Home card to correct it. Work duration shows on the card too.',
+  },
+  {
     icon: 'note',
     title: 'Pre-clock-in notes / clock-out comments',
     body: 'Attach a quick note to each punch.',
@@ -124,14 +129,18 @@ const features = [
   {
     icon: 'receipt',
     title: 'Punch receipt',
-    body: 'Display records as receipt-style slips. Save to photos or share.',
+    body: 'Display records as receipt-style slips. Save to photos or share. Home stacks your clock-in and clock-out receipts; swipe sideways to switch.',
   },
   {
     icon: 'calendar',
     title: 'Records & calendar',
     body: 'Review monthly attendance in a list and calendar view.',
   },
-  { icon: 'chart', title: 'Monthly stats', body: 'Summarize and display your attendance for the month.' },
+  {
+    icon: 'chart',
+    title: 'Monthly stats',
+    body: 'Summarize and display your attendance for the month. Months with long days switch to a 24-hour scale.',
+  },
   { icon: 'bell', title: 'Reminders', body: 'Get notified to punch at your chosen time.' },
   {
     icon: 'sync',
@@ -174,7 +183,12 @@ const proFeatures = [
   {
     icon: 'chart',
     title: 'Extended statistics',
-    body: 'Weekly summaries by day of week and a clock-in time heatmap.',
+    body: 'Weekly summaries by day of week and a heatmap that shades each day by hours worked.',
+  },
+  {
+    icon: 'receipt',
+    title: 'Receipt barcode',
+    body: 'Print a CODE128 or QR code. Scan the QR to view the record on the web (nothing is sent to a server).',
   },
   {
     icon: 'search',
@@ -204,7 +218,7 @@ const comparison = [
   { label: 'Extended stats (weekly & heatmap)', free: false },
   { label: 'Note search', free: false },
   { label: 'CSV / PDF export, CSV import', free: false },
-  { label: 'Receipt barcode content', free: false },
+  { label: 'Receipt barcode content (CODE128 / QR)', free: false },
 ];
 
 const privacyPoints = [
@@ -450,7 +464,7 @@ const privacyPoints = [
             />
             <DeviceFrame
               src={shotHeatmap}
-              alt="Heatmap showing clock-in time patterns with color intensity"
+              alt="Heatmap shading each day by how long you worked"
               caption="Heatmap"
             />
           </div>
