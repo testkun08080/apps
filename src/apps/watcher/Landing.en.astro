@@ -94,14 +94,24 @@ const features = [
     body: 'Browse everything you’ve received in one list. Sort what you’ve read from what you’ve bookmarked.',
   },
   {
+    icon: 'check',
+    title: 'Select in bulk',
+    body: 'Like iOS Mail, drag down the checkboxes to select several reports or watches, then mark them read, unread, or delete them at once.',
+  },
+  {
+    icon: 'layers',
+    title: 'Sidebar',
+    body: 'Open the sidebar to jump to recent reports and watches, and search from there.',
+  },
+  {
     icon: 'search',
     title: 'Search, sort, and filter',
-    body: 'Search by keyword, plus filter by date range, watch, or source.',
+    body: 'Search by keyword, plus filter by date range, watch, or source. You can also set a custom start and end date.',
   },
   {
     icon: 'tag',
-    title: 'Categories',
-    body: 'Organize your watches into categories you define (Standard / Pro).',
+    title: 'Organize with tags',
+    body: 'Sort your watches with tags you create, then filter lists and reports by tag.',
   },
   {
     icon: 'sync',
@@ -111,7 +121,7 @@ const features = [
   {
     icon: 'export',
     title: 'Share and export',
-    body: 'Share as text or image, or export to PDF. Available on every plan.',
+    body: 'Share as text or image, or export to PDF. Images capture the report’s title, summary, and body as they appear. Available on every plan.',
   },
   {
     icon: 'mail',
@@ -121,7 +131,7 @@ const features = [
   {
     icon: 'theme',
     title: 'Light / dark theme',
-    body: 'Match your system setting, or switch manually.',
+    body: 'Match your system setting, or switch manually (Standard / Pro; the trial follows your system setting).',
   },
   {
     icon: 'globe',
@@ -158,7 +168,7 @@ const plans = [
     price: '¥0',
     unit: 'No credit card required',
     quota: 'Up to 5 lifetime runs, counting "research on demand" and scheduled runs together',
-    points: ['Try it out right away', 'You can add watches and schedule them too (each run uses one of the 5)', 'Research at the "key points only" level', 'Report history: the last 7 reports per watch'],
+    points: ['Try it out right away', 'You can add watches and schedule them too (each run uses one of the 5)', 'Research at the "key points only" level', 'Past report history is available on paid plans'],
   },
   {
     name: 'Standard',
@@ -169,7 +179,7 @@ const plans = [
     points: [
       'Scheduled watching (unlimited watches)',
       'Detail levels: "key points only" and "a bit more detail"',
-      'Unlimited report history and category organization',
+      'Report history: the last 7 reports per watch, plus theme switching',
     ],
   },
   {
@@ -181,6 +191,7 @@ const plans = [
     points: [
       'Everything in Standard',
       'Access to the "deepest detail" level',
+      'Unlimited report history',
       'Email delivery',
     ],
   },
@@ -192,8 +203,9 @@ const comparison = [
   { label: 'Reports generated', sample: '5 lifetime', standard: '60 / month', pro: '120 / month' },
   { label: 'Report detail', sample: 'Key points only', standard: 'Up to a bit more detail', pro: 'Up to the deepest detail' },
   { label: 'Research on demand', sample: '1 / day', standard: '3 / day', pro: '5 / day' },
-  { label: 'Report history', sample: 'Last 7', standard: 'Unlimited', pro: 'Unlimited' },
-  { label: 'Categories', sample: '—', standard: '○', pro: '○' },
+  { label: 'Report history', sample: '—', standard: 'Last 7 per watch', pro: 'Unlimited' },
+  { label: 'Tags', sample: '○', standard: '○', pro: '○' },
+  { label: 'Theme switching (light / dark)', sample: '—', standard: '○', pro: '○' },
   { label: 'Share and export (text / image / PDF)', sample: '○', standard: '○', pro: '○' },
   { label: 'Email delivery', sample: '—', standard: '—', pro: '○' },
   { label: 'Ads', sample: 'None', standard: 'None', pro: 'None' },
