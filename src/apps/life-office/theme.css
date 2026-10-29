@@ -351,20 +351,6 @@
   width: min(170px, 32vw);
 }
 
-.lo-hero__device--sub .lo-device {
-  border-radius: 1.6rem;
-  padding: 0.35rem;
-}
-
-.lo-hero__device--sub .lo-device__screen {
-  border-radius: 1.3rem;
-}
-
-.lo-hero__device--sub .lo-device__island {
-  top: 0.75rem;
-  height: 0.7rem;
-}
-
 /* ---------- 端末フレーム ---------- */
 
 .lo-shot {
@@ -381,21 +367,19 @@
   color: var(--color-muted);
 }
 
+/*
+ * iPhone は App Store 用スクショと同じモックアップ画像 (1022×2082) を枠に使い、
+ * 画面の位置と角丸は画像に合わせて % で置く。サイズが変わっても比率が崩れない。
+ * dynamic island はスクショ側に写っているので枠では描かない。
+ */
 .lo-device {
   position: relative;
   width: 100%;
-  padding: 0.55rem;
-  border-radius: 2.5rem;
-  background: linear-gradient(160deg, #4a4d47, var(--lo-bezel) 42%, #35383300 100%),
-    var(--lo-bezel);
-  box-shadow: var(--lo-shadow-lg);
 }
 
 .lo-device__screen {
   overflow: hidden;
-  border-radius: 2rem;
   background: var(--color-bg);
-  aspect-ratio: 1206 / 2622;
 }
 
 .lo-device__screen img {
@@ -406,35 +390,60 @@
   object-position: top center;
 }
 
-.lo-device__island {
-  position: absolute;
-  top: 1.15rem;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 30%;
-  height: 1.2rem;
-  border-radius: 999px;
-  background: var(--lo-bezel);
+.lo-device--phone {
+  aspect-ratio: 1022 / 2082;
 }
 
-/* iPad / Apple Watch フレーム */
+/* 影は本体の角丸に沿わせる（側面ボタンの出っ張りぶん左右を詰める） */
+.lo-device--phone::before {
+  content: '';
+  position: absolute;
+  inset: 0 0.59%;
+  border-radius: 19.8% / 9.6%;
+  box-shadow: var(--lo-shadow-lg);
+}
+
+.lo-device__frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.lo-device--phone .lo-device__screen {
+  position: absolute;
+  left: 5.088%;
+  top: 2.209%;
+  width: 89.824%;
+  height: 95.581%;
+  border-radius: 13.725% / 6.332%;
+}
+
+/* iPad / Apple Watch は CSS の枠。ベゼル幅と角丸を % にして小さく出しても比率を保つ */
+.lo-device--tablet,
+.lo-device--watch {
+  background: linear-gradient(160deg, #4a4d47, var(--lo-bezel) 42%, #35383300 100%),
+    var(--lo-bezel);
+  box-shadow: var(--lo-shadow-lg);
+}
+
 .lo-device--tablet {
-  padding: 0.6rem;
-  border-radius: 1.6rem;
+  padding: 3.5%;
+  border-radius: 6.3% / 4.5%;
 }
 
 .lo-device--tablet .lo-device__screen {
-  border-radius: 1.1rem;
+  border-radius: 2.8% / 2%;
   aspect-ratio: 1640 / 2360;
 }
 
 .lo-device--watch {
-  padding: 0.5rem;
-  border-radius: 2.2rem;
+  padding: 5.5%;
+  border-radius: 24% / 20%;
 }
 
 .lo-device--watch .lo-device__screen {
-  border-radius: 1.75rem;
+  border-radius: 21% / 17.5%;
   aspect-ratio: 416 / 496;
   background: #000;
 }
@@ -587,20 +596,6 @@
   .lo-gallery__item {
     width: auto;
   }
-
-  .lo-gallery__track .lo-device {
-    border-radius: 1.6rem;
-    padding: 0.35rem;
-  }
-
-  .lo-gallery__track .lo-device__screen {
-    border-radius: 1.3rem;
-  }
-
-  .lo-gallery__track .lo-device__island {
-    top: 0.75rem;
-    height: 0.7rem;
-  }
 }
 
 /* ---------- 機能カード（アイコン横並び） ---------- */
@@ -731,17 +726,6 @@
 
 .lo-pro__shots .lo-device {
   width: min(160px, 34vw);
-  border-radius: 1.5rem;
-  padding: 0.3rem;
-}
-
-.lo-pro__shots .lo-device__screen {
-  border-radius: 1.25rem;
-}
-
-.lo-pro__shots .lo-device__island {
-  top: 0.7rem;
-  height: 0.6rem;
 }
 
 /* ---------- 比較表 ---------- */
