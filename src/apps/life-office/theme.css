@@ -6,7 +6,6 @@
   --lo-radius: 1.125rem;
   --lo-shadow: 0 1px 2px rgb(44 44 44 / 6%), 0 12px 32px -12px rgb(44 44 44 / 14%);
   --lo-shadow-lg: 0 2px 6px rgb(44 44 44 / 8%), 0 40px 80px -32px rgb(44 44 44 / 26%);
-  --lo-bezel: #1c1e1a;
   --lo-alt-bg: color-mix(in srgb, var(--color-accent) 5%, var(--color-bg));
   --lo-tint: color-mix(in srgb, var(--color-accent) 12%, transparent);
   --lo-tint-soft: color-mix(in srgb, var(--color-accent) 7%, transparent);
@@ -368,17 +367,73 @@
 }
 
 /*
- * iPhone は App Store 用スクショと同じモックアップ画像 (1022×2082) を枠に使い、
- * 画面の位置と角丸は画像に合わせて % で置く。サイズが変わっても比率が崩れない。
- * dynamic island はスクショ側に写っているので枠では描かない。
+ * 端末の枠は画像で描く。iPhone は App Store 用スクショと同じモックアップ (1022×2082)、
+ * iPad / Apple Watch は同じ色味で作った src/assets/devices/*.svg。
+ * 本体の影と画面の位置・角丸は各枠画像の寸法から % で置くので、サイズが変わっても崩れない。
+ * dynamic island などはスクショ側に写っているので枠では描かない。
  */
 .lo-device {
+  /* iPhone */
+  --frame-aspect: 1022 / 2082;
+  --frame-body-inset: 0 0.59%;
+  --frame-body-radius: 19.8% / 9.6%;
+  --frame-screen-left: 5.088%;
+  --frame-screen-top: 2.209%;
+  --frame-screen-width: 89.824%;
+  --frame-screen-height: 95.581%;
+  --frame-screen-radius: 13.725% / 6.332%;
+
   position: relative;
   width: 100%;
+  aspect-ratio: var(--frame-aspect);
+}
+
+.lo-device--tablet {
+  --frame-aspect: 1888 / 2608;
+  --frame-body-inset: 0.383% 0.53%;
+  --frame-body-radius: 8.03% / 5.796%;
+  --frame-screen-left: 6.568%;
+  --frame-screen-top: 4.755%;
+  --frame-screen-width: 86.864%;
+  --frame-screen-height: 90.491%;
+  --frame-screen-radius: 2.439% / 1.695%;
+}
+
+.lo-device--watch {
+  --frame-aspect: 552 / 608;
+  --frame-body-inset: 0.987% 5.435% 0.987% 1.087%;
+  --frame-body-radius: 29.07% / 25.168%;
+  --frame-screen-left: 10.145%;
+  --frame-screen-top: 9.211%;
+  --frame-screen-width: 75.362%;
+  --frame-screen-height: 81.579%;
+  --frame-screen-radius: 23.077% / 19.355%;
+}
+
+/* 影は本体の角丸に沿わせる（側面ボタンの出っ張りぶんは外す） */
+.lo-device::before {
+  content: '';
+  position: absolute;
+  inset: var(--frame-body-inset);
+  border-radius: var(--frame-body-radius);
+  box-shadow: var(--lo-shadow-lg);
+}
+
+.lo-device__frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .lo-device__screen {
+  position: absolute;
+  left: var(--frame-screen-left);
+  top: var(--frame-screen-top);
+  width: var(--frame-screen-width);
+  height: var(--frame-screen-height);
   overflow: hidden;
+  border-radius: var(--frame-screen-radius);
   background: var(--color-bg);
 }
 
@@ -390,61 +445,7 @@
   object-position: top center;
 }
 
-.lo-device--phone {
-  aspect-ratio: 1022 / 2082;
-}
-
-/* 影は本体の角丸に沿わせる（側面ボタンの出っ張りぶん左右を詰める） */
-.lo-device--phone::before {
-  content: '';
-  position: absolute;
-  inset: 0 0.59%;
-  border-radius: 19.8% / 9.6%;
-  box-shadow: var(--lo-shadow-lg);
-}
-
-.lo-device__frame {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.lo-device--phone .lo-device__screen {
-  position: absolute;
-  left: 5.088%;
-  top: 2.209%;
-  width: 89.824%;
-  height: 95.581%;
-  border-radius: 13.725% / 6.332%;
-}
-
-/* iPad / Apple Watch は CSS の枠。ベゼル幅と角丸を % にして小さく出しても比率を保つ */
-.lo-device--tablet,
-.lo-device--watch {
-  background: linear-gradient(160deg, #4a4d47, var(--lo-bezel) 42%, #35383300 100%),
-    var(--lo-bezel);
-  box-shadow: var(--lo-shadow-lg);
-}
-
-.lo-device--tablet {
-  padding: 3.5%;
-  border-radius: 6.3% / 4.5%;
-}
-
-.lo-device--tablet .lo-device__screen {
-  border-radius: 2.8% / 2%;
-  aspect-ratio: 1640 / 2360;
-}
-
-.lo-device--watch {
-  padding: 5.5%;
-  border-radius: 24% / 20%;
-}
-
 .lo-device--watch .lo-device__screen {
-  border-radius: 21% / 17.5%;
-  aspect-ratio: 416 / 496;
   background: #000;
 }
 

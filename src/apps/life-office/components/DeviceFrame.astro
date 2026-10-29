@@ -2,6 +2,8 @@
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import iphoneFrame from '@/assets/devices/iphone-frame.png';
+import ipadFrame from '@/assets/devices/ipad-frame.svg';
+import watchFrame from '@/assets/devices/watch-frame.svg';
 
 interface Props {
   src: ImageMetadata;
@@ -12,8 +14,8 @@ interface Props {
   widths?: number[];
   sizes?: string;
   /**
-   * 端末の種類。iPhone は App Store 用と同じモックアップ画像を枠に使う
-   * (スクショ側に dynamic island が写っているので枠では描かない)。iPad / Watch は CSS の枠。
+   * 端末の種類。iPhone は App Store 用と同じモックアップ画像、iPad / Watch は同じ色味の SVG を枠に使う
+   * (dynamic island などはスクショ側に写っているので枠では描かない)。
    */
   variant?: 'phone' | 'tablet' | 'watch';
 }
@@ -22,6 +24,7 @@ const { src, alt, caption, eager = false, widths, sizes, variant = 'phone' } = A
 const loading = eager ? 'eager' : 'lazy';
 const imgWidths = widths ?? [300, 460, 620];
 const imgSizes = sizes ?? '(max-width: 640px) 68vw, 300px';
+const vectorFrame = variant === 'tablet' ? ipadFrame : variant === 'watch' ? watchFrame : undefined;
 ---
 
 <figure class="lo-shot">
@@ -35,6 +38,19 @@ const imgSizes = sizes ?? '(max-width: 640px) 68vw, 300px';
           widths={imgWidths}
           sizes={imgSizes}
           loading={loading}
+        />
+      )
+    }
+    {
+      vectorFrame && (
+        <img
+          class="lo-device__frame"
+          src={vectorFrame.src}
+          width={vectorFrame.width}
+          height={vectorFrame.height}
+          alt=""
+          loading={loading}
+          decoding="async"
         />
       )
     }
