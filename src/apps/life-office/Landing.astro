@@ -65,6 +65,12 @@ const gallery = [
     body: '出勤日数や平均時間などをグラフで可視化。',
     alt: '平均出勤時間・平均退勤時間・合計勤務時間と日別勤務時間の棒グラフを表示した統計画面',
   },
+  {
+    src: shotHeatmap,
+    caption: 'ヒートマップ',
+    body: '日ごとの勤務時間を色の濃淡で。週次集計とあわせて無料です。',
+    alt: '日ごとの勤務時間の長さを色の濃さで示したヒートマップ画面',
+  },
 ];
 
 const ipadShots = [
@@ -103,7 +109,7 @@ const watchShots = [
   },
   {
     src: watchComplication,
-    caption: '文字盤（Pro）',
+    caption: '文字盤',
     alt: 'Apple Watch の文字盤に表示された LIFE OFFICE のコンプリケーション。勤務時間と出勤・退勤時刻が表示されている',
   },
 ];
@@ -113,7 +119,7 @@ const features = [
   {
     icon: 'clock',
     title: 'Apple Watch で打刻',
-    body: '手首から出勤・退勤を記録。Digital Crown・タップ・ダブルタップに対応し、iPhone へ自動で反映されます。',
+    body: '手首から出勤・退勤を記録。Digital Crown・タップ・ダブルタップに対応し、iPhone へ自動で反映されます。文字盤やスマートスタックのコンプリケーションで、出勤状態と経過時間も確認できます。',
   },
   { icon: 'shake', title: '振り打刻', body: '端末を振って打刻。設定で ON / OFF できます。' },
   { icon: 'clock', title: '後打刻', body: '打ち忘れた記録をあとから追加できます。' },
@@ -123,6 +129,11 @@ const features = [
     body: 'ホームのカードで出勤・退勤時刻をタップして直せます。勤務時間もカードに表示します。',
   },
   {
+    icon: 'clock',
+    title: '予定退勤までのプログレスバー',
+    body: '勤務中は、予定退勤までの進み具合と残り時間（「あと 2時間15分」など）をホームに表示します。',
+  },
+  {
     icon: 'note',
     title: '出勤前メモ / 退勤コメント',
     body: 'その日の一言を打刻に添えて残せます。',
@@ -130,17 +141,22 @@ const features = [
   {
     icon: 'receipt',
     title: '打刻レシート',
-    body: '記録をレシート風に表示し、写真に保存・共有できます。ホームでは出勤・退勤のレシートが重なり、横スワイプで切り替えられます。',
+    body: '記録をレシート風に表示し、写真に保存・共有できます。ホームでは出勤・退勤のレシートが重なり、横スワイプで切り替えられます。バーコードの種類（QR／CODE128）も選べます。',
   },
   {
     icon: 'calendar',
     title: '記録・カレンダー',
-    body: '月間の出勤を一覧とカレンダーで確認できます。',
+    body: '月間の出勤を一覧とカレンダーで確認できます。右下の共有ボタンから、表示中の内容を画像で共有できます。',
   },
   {
     icon: 'chart',
-    title: '月次統計',
-    body: 'その月の出勤を集計して表示します。長い勤務日がある月は 24 時間スケールで描きます。',
+    title: '統計（月次・週次・ヒートマップ）',
+    body: 'その月の出勤を集計し、曜日ごとの週次集計と、日ごとの勤務時間を色の濃淡で示すヒートマップも表示します。長い勤務日がある月は 24 時間スケールで描きます。',
+  },
+  {
+    icon: 'search',
+    title: 'メモ検索',
+    body: '全文検索に加えて、日付・出勤前メモ／退勤コメントの有無で絞り込めます。キーワードと絞り込みは組み合わせられます。',
   },
   { icon: 'bell', title: 'リマインダー', body: '指定時刻に打刻をお知らせします。' },
   {
@@ -168,13 +184,8 @@ const proFeatures = [
   },
   {
     icon: 'widget',
-    title: 'Apple Watch コンプリケーション',
-    body: '文字盤やスマートスタックに、出勤状態と経過時間を表示します。',
-  },
-  {
-    icon: 'widget',
     title: 'ホーム画面ウィジェット',
-    body: '今日の打刻状況と今月の合計勤務時間を、ホーム画面から一目で。',
+    body: '今日の打刻状況と今月の合計勤務時間、予定退勤までのプログレスバーを、ホーム画面から一目で。',
   },
   {
     icon: 'theme',
@@ -182,24 +193,14 @@ const proFeatures = [
     body: 'ダークとシステム追従を手動で選べます。ライトは無料のまま使えます。',
   },
   {
-    icon: 'chart',
-    title: '拡張統計',
-    body: '曜日ごとの週次集計と、日ごとの勤務時間を色の濃淡で示すヒートマップ。',
-  },
-  {
     icon: 'receipt',
-    title: 'レシートのバーコード',
-    body: 'CODE128 か QR を印字。QR を読み取ると、Web で記録の内容を確認できます（データはサーバーへ送られません）。',
-  },
-  {
-    icon: 'search',
-    title: 'メモ検索',
-    body: '全文検索・日付・退勤コメントの有無で記録を絞り込み。',
+    title: 'レシートのバーコードの内容',
+    body: 'バーコードに載せる内容をテンプレートから選び、専用名を保存できます。QR を読み取ると、Web で記録の内容を確認できます（データはサーバーへ送られません）。',
   },
   {
     icon: 'export',
     title: 'CSV / PDF',
-    body: '月・年・期間指定で書き出し（複数月は ZIP）。CSV からの取り込みにも対応。',
+    body: '月・年・期間指定で書き出し（複数月は ZIP）。記録タブの共有ボタンから、表示中の月をそのまま書き出すこともできます。CSV からの取り込みにも対応。',
   },
 ] as const;
 
@@ -208,18 +209,20 @@ const comparison = [
   { label: 'スワイプ打刻・振り打刻・後打刻', free: true },
   { label: '出勤前メモ / 退勤コメント', free: true },
   { label: 'レシート表示・写真保存・共有', free: true },
-  { label: '記録一覧・カレンダー・月次統計', free: true },
+  { label: '記録一覧・カレンダー', free: true },
+  { label: '統計（月次・週次・ヒートマップ）', free: true },
+  { label: 'メモ検索', free: true },
+  { label: '記録の画像共有', free: true },
+  { label: 'レシートのバーコードの種類（QR / CODE128）', free: true },
   { label: '目標時刻・勤務曜日・毎日のリマインダー', free: true },
   { label: 'iCloud 同期', free: true },
   { label: 'ライトテーマ', free: true },
   { label: 'ダークテーマ／システム追従', free: false },
   { label: 'Apple Watch での出勤・退勤打刻', free: true },
+  { label: 'Apple Watch コンプリケーション（文字盤・スマートスタック）', free: true },
   { label: 'ホーム画面ウィジェット', free: false },
-  { label: 'Apple Watch コンプリケーション（文字盤・スマートスタック）', free: false },
-  { label: '拡張統計（週次・ヒートマップ）', free: false },
-  { label: 'メモ検索', free: false },
   { label: 'CSV / PDF エクスポート、CSV インポート', free: false },
-  { label: 'レシートのバーコードの内容（CODE128 / QR）', free: false },
+  { label: 'レシートのバーコードの内容（テンプレート・専用名）', free: false },
 ];
 
 const privacyPoints = [
@@ -375,7 +378,7 @@ const privacyPoints = [
           <p>Apple Watch アプリで、iPhone を取り出さずに打刻できます。Watch で打刻した記録は iPhone のアプリへ自動で反映されます。</p>
           <ul class="lo-multi__list">
             <li>出勤・退勤の打刻は無料（Digital Crown を回す／タップ／ダブルタップ）</li>
-            <li>文字盤・スマートスタックのコンプリケーションは Pro</li>
+            <li>文字盤・スマートスタックのコンプリケーションも無料</li>
             <li>watchOS 10 以降に対応</li>
           </ul>
         </div>
@@ -405,7 +408,7 @@ const privacyPoints = [
           <h2 id="lo-features-title" class="lo-h2">便利な機能で、毎日をもっと快適に。</h2>
           <p class="lo-sub">
             無料プランでは、記録・検索・設定とレシート画面にバナー広告が表示されます。
-            出勤タブと打刻の儀式には広告を出しません。Pro を購入すると広告は表示されなくなります。
+            出勤タブと打刻の儀式には広告を出さず、共有する画像にも広告は入りません。Pro にすると広告は表示されなくなります。
           </p>
         </div>
 
@@ -436,7 +439,14 @@ const privacyPoints = [
             <strong>¥600</strong>
             <span class="lo-price__tag">買い切り</span>
           </p>
-          <p class="lo-sub">サブスクリプションではありません。より高度な機能で働き方をサポート。</p>
+          <p class="lo-price lo-price--alt">
+            <span>または</span>
+            <strong>¥300<small> / 月</small></strong>
+            <span class="lo-price__tag">月額プラン</span>
+          </p>
+          <p class="lo-sub">
+            一度の購入でずっと使える買い切りと、まず試せる月額プランから選べます。どちらも同じ Pro 機能が使えます。月額プランは自動更新で、いつでも解約できます。
+          </p>
         </div>
 
         <div class="lo-pro__body">
@@ -461,11 +471,6 @@ const privacyPoints = [
               src={shotWidget}
               alt="ホーム画面に置いた LIFE OFFICE のウィジェット。出勤時刻・経過時間・予定退勤と今月の合計勤務時間のグラフが表示されている"
               caption="ウィジェット"
-            />
-            <DeviceFrame
-              src={shotHeatmap}
-              alt="日ごとの勤務時間の長さを色の濃さで示したヒートマップ画面"
-              caption="ヒートマップ"
             />
           </div>
         </div>

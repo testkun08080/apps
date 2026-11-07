@@ -64,6 +64,12 @@ const gallery = [
     body: 'Visualize work days, average times, and more with charts.',
     alt: 'Stats screen showing average clock-in/out times, total hours, and a daily bar chart',
   },
+  {
+    src: shotHeatmap,
+    caption: 'Heatmap',
+    body: 'Shade each day by hours worked. Free, along with weekly summaries.',
+    alt: 'Heatmap shading each day by how long you worked',
+  },
 ];
 
 const ipadShots = [
@@ -102,7 +108,7 @@ const watchShots = [
   },
   {
     src: watchComplication,
-    caption: 'Watch face (Pro)',
+    caption: 'Watch face',
     alt: 'LIFE OFFICE complication on an Apple Watch face showing work time and clock-in/out times',
   },
 ];
@@ -112,7 +118,7 @@ const features = [
   {
     icon: 'clock',
     title: 'Punch from Apple Watch',
-    body: 'Clock in and out from your wrist with the Digital Crown, a tap, or a double tap. Punches sync to your iPhone automatically.',
+    body: 'Clock in and out from your wrist with the Digital Crown, a tap, or a double tap. Punches sync to your iPhone automatically. Complications show your work status and elapsed time on your watch face and in the Smart Stack.',
   },
   { icon: 'shake', title: 'Shake to punch', body: 'Punch by shaking your device. Toggle ON/OFF in settings.' },
   { icon: 'clock', title: 'Retroactive punch', body: 'Add records you forgot to punch earlier.' },
@@ -122,6 +128,11 @@ const features = [
     body: 'Tap the clock-in or clock-out time on the Home card to correct it. Work duration shows on the card too.',
   },
   {
+    icon: 'clock',
+    title: 'Progress to clock-out',
+    body: 'While you work, Home shows a progress bar and the time left until your planned clock-out (e.g. “2h 15m left”).',
+  },
+  {
     icon: 'note',
     title: 'Pre-clock-in notes / clock-out comments',
     body: 'Attach a quick note to each punch.',
@@ -129,17 +140,22 @@ const features = [
   {
     icon: 'receipt',
     title: 'Punch receipt',
-    body: 'Display records as receipt-style slips. Save to photos or share. Home stacks your clock-in and clock-out receipts; swipe sideways to switch.',
+    body: 'Display records as receipt-style slips. Save to photos or share. Home stacks your clock-in and clock-out receipts; swipe sideways to switch. Choose a QR or CODE128 barcode.',
   },
   {
     icon: 'calendar',
     title: 'Records & calendar',
-    body: 'Review monthly attendance in a list and calendar view.',
+    body: 'Review monthly attendance in a list and calendar view. Share what you see as an image from the share button at the bottom right.',
   },
   {
     icon: 'chart',
-    title: 'Monthly stats',
-    body: 'Summarize and display your attendance for the month. Months with long days switch to a 24-hour scale.',
+    title: 'Stats (monthly, weekly & heatmap)',
+    body: 'Summarize the month, see weekly summaries by day of week, and a heatmap that shades each day by hours worked. Months with long days switch to a 24-hour scale.',
+  },
+  {
+    icon: 'search',
+    title: 'Note search',
+    body: 'Full-text search plus filters for date and for pre-clock-in notes / clock-out comments. Combine keywords and filters.',
   },
   { icon: 'bell', title: 'Reminders', body: 'Get notified to punch at your chosen time.' },
   {
@@ -167,13 +183,8 @@ const proFeatures = [
   },
   {
     icon: 'widget',
-    title: 'Apple Watch complication',
-    body: 'Show your work status and elapsed time on your watch face and in the Smart Stack.',
-  },
-  {
-    icon: 'widget',
     title: 'Home screen widget',
-    body: 'See today\'s punch status and this month\'s total hours at a glance.',
+    body: 'See today\'s punch status, this month\'s total hours, and progress to your planned clock-out at a glance.',
   },
   {
     icon: 'theme',
@@ -181,24 +192,14 @@ const proFeatures = [
     body: 'Pick dark or follow the system. Light stays free.',
   },
   {
-    icon: 'chart',
-    title: 'Extended statistics',
-    body: 'Weekly summaries by day of week and a heatmap that shades each day by hours worked.',
-  },
-  {
     icon: 'receipt',
-    title: 'Receipt barcode',
-    body: 'Print a CODE128 or QR code. Scan the QR to view the record on the web (nothing is sent to a server).',
-  },
-  {
-    icon: 'search',
-    title: 'Note search',
-    body: 'Filter records with full-text search, date, and clock-out comment filters.',
+    title: 'Receipt barcode content',
+    body: 'Pick what the barcode carries from templates and save a custom name. Scan the QR to view the record on the web (nothing is sent to a server).',
   },
   {
     icon: 'export',
     title: 'CSV / PDF',
-    body: 'Export by month, year, or custom range (multi-month as ZIP). Import from CSV too.',
+    body: 'Export by month, year, or custom range (multi-month as ZIP), or export the shown month straight from the Records share button. Import from CSV too.',
   },
 ] as const;
 
@@ -207,18 +208,20 @@ const comparison = [
   { label: 'Swipe / shake / retroactive punch', free: true },
   { label: 'Pre-clock-in notes / clock-out comments', free: true },
   { label: 'Receipt view, photo save & share', free: true },
-  { label: 'Record list, calendar & monthly stats', free: true },
+  { label: 'Record list & calendar', free: true },
+  { label: 'Stats (monthly, weekly & heatmap)', free: true },
+  { label: 'Note search', free: true },
+  { label: 'Share records as an image', free: true },
+  { label: 'Receipt barcode type (QR / CODE128)', free: true },
   { label: 'Target time, work days & daily reminders', free: true },
   { label: 'iCloud sync', free: true },
   { label: 'Light theme', free: true },
   { label: 'Dark theme / system follow', free: false },
   { label: 'Clock in/out from Apple Watch', free: true },
+  { label: 'Apple Watch complication (watch face & Smart Stack)', free: true },
   { label: 'Home screen widget', free: false },
-  { label: 'Apple Watch complication (watch face & Smart Stack)', free: false },
-  { label: 'Extended stats (weekly & heatmap)', free: false },
-  { label: 'Note search', free: false },
   { label: 'CSV / PDF export, CSV import', free: false },
-  { label: 'Receipt barcode content (CODE128 / QR)', free: false },
+  { label: 'Receipt barcode content (templates & custom name)', free: false },
 ];
 
 const privacyPoints = [
@@ -374,7 +377,7 @@ const privacyPoints = [
           <p>The Apple Watch app lets you clock in without taking out your iPhone. Punches made on the Watch sync to the iPhone app automatically.</p>
           <ul class="lo-multi__list">
             <li>Clock in and out for free — turn the Digital Crown, tap, or double tap</li>
-            <li>Watch face and Smart Stack complication is a Pro feature</li>
+            <li>Watch face and Smart Stack complications are free too</li>
             <li>Requires watchOS 10 or later</li>
           </ul>
         </div>
@@ -404,8 +407,8 @@ const privacyPoints = [
           <h2 id="lo-features-title" class="lo-h2">Handy tools for a smoother daily routine.</h2>
           <p class="lo-sub">
             On the free plan, banner ads appear on Records, Search, Settings, and the receipt
-            screen. There are no ads on the home punch tab or during the punch ritual, and
-            LIFE OFFICE Pro removes them entirely.
+            screen. There are no ads on the home punch tab, during the punch ritual, or in images
+            you share, and LIFE OFFICE Pro removes them entirely.
           </p>
         </div>
 
@@ -436,7 +439,15 @@ const privacyPoints = [
             <strong>¥600</strong>
             <span class="lo-price__tag">One-time purchase</span>
           </p>
-          <p class="lo-sub">Not a subscription. Advanced features to support how you work.</p>
+          <p class="lo-price lo-price--alt">
+            <span>or</span>
+            <strong>¥300<small> / month</small></strong>
+            <span class="lo-price__tag">Monthly plan</span>
+          </p>
+          <p class="lo-sub">
+            Pay once and keep it, or start with the monthly plan. Both unlock the same Pro features.
+            The monthly plan renews automatically, and you can cancel anytime.
+          </p>
         </div>
 
         <div class="lo-pro__body">
@@ -461,11 +472,6 @@ const privacyPoints = [
               src={shotWidget}
               alt="LIFE OFFICE home screen widget showing clock-in time, elapsed time, planned clock-out, and monthly hours chart"
               caption="Widget"
-            />
-            <DeviceFrame
-              src={shotHeatmap}
-              alt="Heatmap shading each day by how long you worked"
-              caption="Heatmap"
             />
           </div>
         </div>

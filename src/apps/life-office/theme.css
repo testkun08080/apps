@@ -703,6 +703,22 @@
   font-weight: 600;
 }
 
+.lo-price strong small {
+  font-size: 0.5em;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.lo-price--alt {
+  margin-top: -0.25rem;
+  color: var(--color-muted);
+}
+
+.lo-price--alt strong {
+  color: var(--color-text);
+  font-size: clamp(1.375rem, 3.5vw, 1.75rem);
+}
+
 .lo-pro__body {
   display: grid;
   gap: clamp(2rem, 5vw, 3rem);

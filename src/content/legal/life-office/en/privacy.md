@@ -3,7 +3,7 @@ title: Privacy Policy
 appSlug: life-office
 docType: privacy
 locale: en
-updated: 2026-10-07
+updated: 2026-11-07
 ---
 
 ## 1. Introduction
@@ -52,9 +52,9 @@ The App may request the following permissions:
 
 On the free plan, the App shows banner ads served by Google AdMob.
 
-- Where ads appear: the Records, Search, and Settings tabs (just above the tab bar), within the record list, and on the punch receipt screen outside the receipt card
+- Where ads appear: the Records, Search, and Settings tabs (just above the tab bar), within the record list, below the stats chart, within search results, and on the punch receipt screen outside the receipt card
 - Where ads never appear: the home punch tab, the punch sequence, onboarding, and the Pro purchase screen
-- Receipt images you save to Photos or share never contain an ad
+- Receipt images you save to Photos or share, and images shared from the Records tab, never contain an ad
 - Purchasing **LIFE OFFICE Pro** removes all banner ads from the App
 
 Only **non-personalized ads** are served. The App does not perform advertising tracking, does not show an App Tracking Transparency (ATT) prompt, and does not use the advertising identifier (IDFA).
