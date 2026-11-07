@@ -14,6 +14,34 @@ export type Release = {
  */
 export const releases: Release[] = [
   {
+    version: '1.5.4',
+    date: '2026-11-07',
+    highlights: {
+      ja: [
+        '統計（週次・ヒートマップ）とメモ検索を無料でお使いいただけるようになりました',
+        'Apple Watch の文字盤・スマートスタックのコンプリケーションも無料になりました',
+        '記録の一覧・カレンダー・統計の右下に共有ボタンを追加。画像で共有できます（Pro では表示中の月を CSV／PDF でそのまま書き出し）',
+        'レシートのバーコード種類（QR／CODE128）を無料で選べるようになりました。新規は QR が既定です',
+        'Pro に月額プラン（¥300／月）が登場。買い切りとどちらでも選べます',
+        '勤務中、予定退勤までの進み具合と残り時間をホームとウィジェットに表示',
+        '打刻時のタイムカードが表示言語に対応し、直近の記録も表示されます',
+        '閉じる・決定ボタンをシステム標準のデザインにし、画面上部が透けて見やすくなりました',
+        'バーコード設定のプレビューを画面下に常時表示。検索・文字サイズ拡大時の表示、ウィジェット、月選択の不具合などを改善しました',
+      ],
+      en: [
+        'Stats (weekly and heatmap) and memo search are now free',
+        'Apple Watch complications on the watch face and in the Smart Stack are now free too',
+        'New share button on Records list, calendar and stats: share as an image, or (Pro) export the shown month as CSV / PDF',
+        'Receipt barcode format (QR / CODE128) is free to choose; new installs default to QR',
+        'Pro now also comes as a monthly plan (¥300/month), alongside the one-time purchase',
+        'While you work, Home and the widget show a progress bar and time left until your planned clock-out',
+        'The punch time card follows the app language and shows your recent records',
+        'Close and confirm buttons now use the system style, with see-through headers',
+        'Barcode settings keep a live preview docked at the bottom. Also improved search, large-text layouts, widget layout, and the month picker’s “This month” button',
+      ],
+    },
+  },
+  {
     version: '1.5.3',
     // 公開日の記録がないため、1.5.4 へバージョンを上げた日（提出のころ）で仮置きしています。
     date: '2026-10-12',
