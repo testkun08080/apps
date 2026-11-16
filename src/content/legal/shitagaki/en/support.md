@@ -3,7 +3,7 @@ title: Support
 docType: support
 appSlug: shitagaki
 locale: en
-updated: 2026-10-01
+updated: 2026-10-28
 ---
 
 Replies can take a few days. For bug reports, it helps to include your device model, your iOS version, and what you were doing when it happened.
@@ -13,7 +13,7 @@ Replies can take a few days. For bug reports, it helps to include your device mo
 - iPhone / iPad (iOS 26 or later)
 - English, Japanese, Korean, Traditional Chinese, German, French, Spanish and Thai. The App follows your device language, and you can pick one under Settings > Language
 - No account or sign-in
-- On the [App Store](https://apps.apple.com/app/id6774141263) (current version 1.2.1)
+- On the [App Store](https://apps.apple.com/app/id6774141263) (current version 1.2.3)
 
 ## Frequently asked questions
 

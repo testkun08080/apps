@@ -18,4 +18,5 @@ There is one service: the Astro dev server. Standard commands live in `package.j
 
 - Apps are registered by presence of `src/apps/<slug>/config.ts` (see `src/apps/index.ts`). The dev server hot-reloads newly scaffolded apps automatically — no restart needed after `npm run new-app`.
 - Scaffold a new app with `npm run new-app <slug> "<Display Name>" [support-email]`; slugs `support`/`privacy`/`terms`/`index` are reserved.
+- OG images (1200×630, per app × locale) are generated at build time by `src/pages/og/[locale]/[slug].png.ts` (Satori + resvg, fonts from `@fontsource/noto-sans-jp`). Keep box-shadow blur ≤ ~60px there — larger blurs make resvg panic and kill the build.
 - Routes: `/<slug>/` (landing), `/<slug>/privacy/`, `/<slug>/terms/`, `/<slug>/support/`. Legal pages share `LegalLayout` and apply per-app theme colors from `config.ts`.

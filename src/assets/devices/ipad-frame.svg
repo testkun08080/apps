@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1888 2608" width="1888" height="2608">
+<defs>
+  <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#fff" stop-opacity=".22"/>
+    <stop offset=".45" stop-color="#fff" stop-opacity="0"/>
+    <stop offset="1" stop-color="#000" stop-opacity=".12"/>
+  </linearGradient>
+  <linearGradient id="btn" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0" stop-color="#8b8065"/>
+    <stop offset=".4" stop-color="#ddd6c4"/>
+    <stop offset="1" stop-color="#a8997a"/>
+  </linearGradient>
+  <linearGradient id="btnv" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#8b8065"/>
+    <stop offset=".4" stop-color="#ddd6c4"/>
+    <stop offset="1" stop-color="#a8997a"/>
+  </linearGradient>
+  <radialGradient id="lens" cx=".4" cy=".35" r=".7">
+    <stop offset="0" stop-color="#3b4a63"/>
+    <stop offset=".5" stop-color="#14171f"/>
+    <stop offset="1" stop-color="#050506"/>
+  </radialGradient>
+</defs>
+<rect x="1548" y="3" width="170" height="20" rx="8" fill="url(#btnv)" />
+<rect x="1865" y="240" width="20" height="130" rx="8" fill="url(#btn)" />
+<rect x="1865" y="390" width="20" height="130" rx="8" fill="url(#btn)" />
+<rect x="10" y="10" width="1868" height="2588" rx="150" fill="#9a8866" />
+<rect x="16.8" y="16.8" width="1854.4" height="2574.4" rx="143.2" fill="#c0b49c" />
+<rect x="21.9" y="21.9" width="1844.2" height="2564.2" rx="138.1" fill="#e2ddcf" />
+<rect x="27" y="27" width="1834" height="2554" rx="133" fill="#bcaf97" />
+<rect x="32.1" y="32.1" width="1823.8" height="2543.8" rx="127.9" fill="#968360" />
+<rect x="10" y="10" width="1868" height="2588" rx="150" fill="url(#sheen)" />
+<rect x="32" y="32" width="1824" height="2544" rx="128" fill="#050505" />
+<rect x="35" y="35" width="1818" height="2538" rx="125" fill="none" stroke="#262626" stroke-width="2"/>
+<circle cx="944" cy="78" r="11" fill="url(#lens)"/>
+<circle cx="941" cy="75" r="2.5" fill="#6f86b0" opacity=".7"/>
+<rect x="124" y="124" width="1640" height="2360" rx="40" fill="#000" />
+</svg>

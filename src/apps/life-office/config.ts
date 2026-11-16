@@ -1,4 +1,6 @@
 import type { AppConfig } from '@/apps/types';
+import shotHome from '@/assets/life-office/home.png';
+import shotReceipt from '@/assets/life-office/receipt.png';
 import icon from '@/assets/life-office/icon.png';
 
 /**
@@ -14,7 +16,15 @@ export const app: AppConfig = {
   supportEmail: 'support-app+life-office@testkun.net',
   icon,
   appStoreUrl: 'https://apps.apple.com/jp/app/id6773638323',
-  version: '1.5.2',
+  version: '1.5.4',
+  og: {
+    headline: {
+      ja: '毎朝の出勤儀式を、\nスマホで。',
+      en: 'Your morning\nclock-in ritual,\non your phone.',
+    },
+    kicker: { ja: 'iPhone・iPad・Apple Watch', en: 'iPhone, iPad & Apple Watch' },
+    screenshots: [{ image: shotHome }, { image: shotReceipt }],
+  },
   theme: {
     bg: '#f5f0e8',
     surface: '#ffffff',

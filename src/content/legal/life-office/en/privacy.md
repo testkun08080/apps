@@ -3,7 +3,7 @@ title: Privacy Policy
 appSlug: life-office
 docType: privacy
 locale: en
-updated: 2026-09-05
+updated: 2026-11-07
 ---
 
 ## 1. Introduction
@@ -22,6 +22,10 @@ The App **does not require account registration**. The following data is stored 
 | Receipt image saves | Saved to your photo library when you choose | Device Photos app |
 
 Punch receipt barcodes are **generated on your device** from your profile name and punch date/time. They are not sent externally for generation or display.
+
+If you choose **QR** as the barcode type, the QR code contains a link to the receipt viewer on this website, and the link carries the receipt details (profile name, punch date/time, work duration and memo). Those details live only in the part of the URL after "#" (the fragment), which browsers do not send to our server. The viewer page is not indexed by search engines and does not load analytics (Google Analytics). Anyone you share the QR code, its image or the link with can read the receipt details.
+
+The receipt reader on this website (camera and image scanning) runs entirely in your browser. Camera frames and images are never uploaded to a server.
 
 ## 3. Third-Party Services
 
@@ -48,9 +52,9 @@ The App may request the following permissions:
 
 On the free plan, the App shows banner ads served by Google AdMob.
 
-- Where ads appear: the Records, Search, and Settings tabs (just above the tab bar), within the record list, and on the punch receipt screen outside the receipt card
+- Where ads appear: the Records, Search, and Settings tabs (just above the tab bar), within the record list, below the stats chart, within search results, and on the punch receipt screen outside the receipt card
 - Where ads never appear: the home punch tab, the punch sequence, onboarding, and the Pro purchase screen
-- Receipt images you save to Photos or share never contain an ad
+- Receipt images you save to Photos or share, and images shared from the Records tab, never contain an ad
 - Purchasing **LIFE OFFICE Pro** removes all banner ads from the App
 
 Only **non-personalized ads** are served. The App does not perform advertising tracking, does not show an App Tracking Transparency (ATT) prompt, and does not use the advertising identifier (IDFA).

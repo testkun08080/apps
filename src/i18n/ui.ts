@@ -34,6 +34,13 @@ export const ui = {
     language: {
       switchTo: '言語を切り替え',
     },
+    og: {
+      kicker: 'iPhone アプリ',
+      available: 'App Store で配信中',
+      comingSoon: '近日公開',
+      hubTitle: 'testkun のアプリ',
+      imageAlt: (appName: string) => `${appName} の紹介画像`,
+    },
   },
   en: {
     nav: {
@@ -68,6 +75,13 @@ export const ui = {
     },
     language: {
       switchTo: 'Switch language',
+    },
+    og: {
+      kicker: 'App for iPhone',
+      available: 'On the App Store',
+      comingSoon: 'Coming soon',
+      hubTitle: 'Apps by testkun',
+      imageAlt: (appName: string) => `${appName} preview`,
     },
   },
 } as const satisfies Record<Locale, Record<string, unknown>>;

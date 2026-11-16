@@ -4,7 +4,9 @@ import type { AppConfig } from '@/apps/types';
 import { themeToCss } from '@/lib/theme';
 import { site } from '@/config/site';
 import { defaultLocale, type Locale } from '@/config/i18n';
-import { getAlternateUrls, resolveLocalized } from '@/i18n';
+import { getAlternateUrls, resolveLocalized, t } from '@/i18n';
+import { getOgImagePath } from '@/apps';
+import { OG_HEIGHT, OG_WIDTH } from '@/lib/og-size';
 import { buildGaConfigScript, cspHash, parsePageAnalytics } from '@/lib/analytics';
 import { jsonForInlineScript } from '@/lib/json';
 import GoogleAnalytics from '@/components/GoogleAnalytics.astro';
@@ -14,32 +16,39 @@ interface Props {
   app?: AppConfig;
   locale?: Locale;
   description?: string;
-  /** OGP 画像の URL（省略時はアプリアイコン／サイト既定） */
+  /** OGP 画像の URL（省略時はアプリごとに生成した /og/<locale>/<slug>.png、アプリ外はアプリ一覧用） */
   ogImage?: string;
   /** schema.org SoftwareApplication の applicationCategory（省略時は ProductivityApplication） */
   schemaCategory?: string;
   /** true のとき、かつ app.appStoreUrl があるとき、SoftwareApplication の構造化データを出力する */
   isAppHome?: boolean;
+  /** true のとき検索エンジンに載せない（個人データを URL に含むページ向け） */
+  noindex?: boolean;
+  /** true のとき WebAssembly の実行を許可する（ブラウザ内バーコード読み取り用） */
+  allowWasm?: boolean;
+  /** true のとき GA を読み込まない（page_location に URL フラグメントの個人データが載るページ向け） */
+  disableAnalytics?: boolean;
 }
 
-const { title, app, locale = defaultLocale, description, ogImage, schemaCategory, isAppHome } = Astro.props;
+const { title, app, locale = defaultLocale, description, ogImage, schemaCategory, isAppHome, noindex, allowWasm, disableAnalytics } = Astro.props;
 const appName = app ? resolveLocalized(app.name, locale) : undefined;
 const pageTitle = app && title !== appName ? `${title} — ${appName}` : title;
 const pageDescription =
   description ?? (appName ? `${appName} — ${title}` : title);
 const base = import.meta.env.BASE_URL;
 const canonical = new URL(Astro.url.pathname, site.publicBaseUrl).href;
-const ogImageUrl = ogImage ? new URL(ogImage, site.publicBaseUrl).href : undefined;
+const ogImageUrl = new URL(ogImage ?? getOgImagePath(app?.slug ?? 'index', locale), site.publicBaseUrl).href;
+const ogImageAlt = appName ? t(locale, 'og.imageAlt', appName) : t(locale, 'og.hubTitle');
 const themeCss = app ? themeToCss(app.slug, app.theme, app.darkTheme) : undefined;
 const alternateUrls = getAlternateUrls(Astro.url.pathname, locale);
 const pageAnalytics = parsePageAnalytics(Astro.url.pathname, app?.slug);
 const gaId = site.googleAnalyticsId;
-const enableGa = import.meta.env.PROD && gaId.length > 0;
+const enableGa = import.meta.env.PROD && gaId.length > 0 && !disableAnalytics;
 
 // GitHub Pages ではレスポンスヘッダを設定できないため、<meta> で CSP を付与する。
 // （frame-ancestors / report-uri / sandbox は meta では無効）
 const gaHosts = ['https://www.googletagmanager.com', 'https://*.google-analytics.com', 'https://*.analytics.google.com'];
-const scriptSrc = ["'self'", ...(enableGa ? [cspHash(buildGaConfigScript(gaId, pageAnalytics)), gaHosts[0]] : [])];
+const scriptSrc = ["'self'", ...(allowWasm ? ["'wasm-unsafe-eval'"] : []), ...(enableGa ? [cspHash(buildGaConfigScript(gaId, pageAnalytics)), gaHosts[0]] : [])];
 const csp = [
   "default-src 'self'",
   `script-src ${scriptSrc.join(' ')}`,
@@ -64,7 +73,7 @@ const softwareAppJsonLd =
         operatingSystem: 'iOS',
         applicationCategory: schemaCategory ?? 'ProductivityApplication',
         url: canonical,
-        ...(ogImageUrl ? { image: ogImageUrl } : {}),
+        image: ogImageUrl,
         ...(app.version ? { softwareVersion: app.version } : {}),
         offers: {
           '@type': 'Offer',
@@ -85,6 +94,7 @@ const softwareAppJsonLd =
     <meta http-equiv="Content-Security-Policy" content={csp} />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="description" content={pageDescription} />
+    {noindex && <meta name="robots" content="noindex" />}
     <title>{pageTitle}</title>
 
     <link rel="canonical" href={canonical} />
@@ -102,9 +112,21 @@ const softwareAppJsonLd =
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
     <meta property="og:url" content={canonical} />
-    <meta name="twitter:card" content={ogImageUrl ? 'summary_large_image' : 'summary'} />
-    {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
-    {ogImageUrl && <meta name="twitter:image" content={ogImageUrl} />}
+    <meta property="og:locale" content={locale === 'ja' ? 'ja_JP' : 'en_US'} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    {
+      !ogImage && (
+        <>
+          <meta property="og:image:type" content="image/png" />
+          <meta property="og:image:width" content={String(OG_WIDTH)} />
+          <meta property="og:image:height" content={String(OG_HEIGHT)} />
+        </>
+      )
+    }
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
 
     {softwareAppJsonLd && <script type="application/ld+json" is:inline set:html={softwareAppJsonLd} />}
 
